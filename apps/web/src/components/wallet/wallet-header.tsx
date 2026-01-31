@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Coins, Plus, Star, LogOut, Menu, X } from "lucide-react";
+import { Coins, Plus, Star, LogOut, Menu, X, User } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { useWallet } from "@/contexts/wallet-context";
 import { Button } from "@/components/ui/button";
@@ -40,14 +41,14 @@ export function WalletHeader() {
       <header className="bg-background border-b-4 border-black">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
             <div className="w-10 h-10 bg-primary border-4 border-black flex items-center justify-center">
               <Coins className="w-5 h-5" />
             </div>
             <span className="font-heading text-xl uppercase hidden sm:block">
               StakeStudy
             </span>
-          </div>
+          </Link>
 
           {/* Desktop: Wallet & User */}
           <div className="hidden md:flex items-center gap-4">
@@ -77,6 +78,13 @@ export function WalletHeader() {
                 Top Up
               </Button>
             </div>
+
+            {/* Profile Link */}
+            <Link href="/profile">
+              <Button variant="ghost" size="sm">
+                <User className="w-4 h-4" />
+              </Button>
+            </Link>
 
             {/* Sign Out */}
             <Button variant="ghost" size="sm" onClick={signOut}>
@@ -127,6 +135,17 @@ export function WalletHeader() {
 
                 {/* Actions */}
                 <div className="flex gap-2">
+                  <Link href="/profile" className="flex-1">
+                    <Button
+                      variant="outline"
+                      size="md"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full"
+                    >
+                      <User className="w-4 h-4 mr-1" />
+                      Perfil
+                    </Button>
+                  </Link>
                   <Button
                     variant="accent"
                     size="md"

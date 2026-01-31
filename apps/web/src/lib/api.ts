@@ -64,7 +64,9 @@ async function request<T>(
     );
   }
 
-  return data as T;
+  // La API envuelve las respuestas en { data: ... } por el TransformInterceptor
+  // Extraemos el data si existe, sino devolvemos la respuesta completa
+  return (data?.data !== undefined ? data.data : data) as T;
 }
 
 export const api = {

@@ -83,4 +83,7 @@ export type Transaction = {
   type: TransactionType;
   createdAt: string;
   lobbyId?: string;
+  lobby?: {
+    code: string;
+  };
 };
