@@ -1,88 +1,67 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 
 interface Winner {
+  id: number;
   user: string;
   amount: number;
   subject: string;
 }
 
 const winners: Winner[] = [
-  { user: "AlexDev", amount: 50, subject: "Java" },
-  { user: "SarahMed", amount: 120, subject: "Anatomía" },
-  { user: "LawMaster", amount: 85, subject: "Derecho Civil" },
-  { user: "CryptoKid", amount: 200, subject: "Economía" },
-  { user: "EngineerX", amount: 45, subject: "Física II" },
+  { id: 1, user: "AlexDev", amount: 50, subject: "Java" },
+  { id: 2, user: "SarahMed", amount: 120, subject: "Anatomía" },
+  { id: 3, user: "LawMaster", amount: 85, subject: "Derecho Civil" },
+  { id: 4, user: "CryptoKid", amount: 200, subject: "Economía" },
+  { id: 5, user: "EngineerX", amount: 45, subject: "Física II" },
 ];
 
-function TickerContent() {
-  return (
-    <>
-      {winners.map((winner, index) => (
-        <div
-          key={index}
-          className="inline-block px-8 shrink-0"
-          style={{
-            fontFamily: "var(--font-heading)",
-            color: "var(--text-body)",
-            fontSize: "0.9rem",
-          }}
-        >
-          🔥 {winner.user} ganó <span style={{ color: "var(--token-gold)", fontWeight: "bold" }}>{winner.amount} Tokens</span> en {winner.subject}
-        </div>
-      ))}
-    </>
-  );
-}
-
 export default function Ticker() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const tickerRef = useRef<HTMLDivElement>(null);
+  const [animationDuration, setAnimationDuration] = useState(20);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    let animationId: number;
-    let position = 0;
-    const speed = 0.5;
-
-    const animate = () => {
-      position -= speed;
-      const contentWidth = container.scrollWidth / 4; 
-      if (Math.abs(position) >= contentWidth) {
-        position = 0;
-      }
-      container.style.transform = `translateX(${position}px)`;
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animationId = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(animationId);
+    if (tickerRef.current) {
+      const width = tickerRef.current.scrollWidth;
+      setAnimationDuration(width / 50);
+    }
   }, []);
 
   return (
-    // HTML STYLE: background-color: var(--bg-card); border-top: 1px solid var(--neon-green); border-bottom: 1px solid var(--neon-green); padding: 10px 0; margin: 2rem 0;
     <div
-      className="w-full overflow-hidden"
       style={{
-        backgroundColor: "var(--bg-card)",
-        borderTop: "1px solid var(--neon-green)",
-        borderBottom: "1px solid var(--neon-green)",
-        padding: "10px 0",
-        margin: "2rem 0",
+        width: "100%",
+        overflow: "hidden",
+        background: "var(--yellow)",
+        borderTop: "3px solid var(--black)",
+        borderBottom: "3px solid var(--black)",
+        padding: "12px 0"
       }}
     >
       <div
-        ref={containerRef}
-        className="flex whitespace-nowrap"
-        style={{ willChange: "transform" }}
+        ref={tickerRef}
+        style={{
+          display: "flex",
+          whiteSpace: "nowrap",
+          animation: `scroll ${animationDuration}s linear infinite`
+        }}
       >
-        <TickerContent />
-        <TickerContent />
-        <TickerContent />
-        <TickerContent />
+        {[...winners, ...winners, ...winners].map((winner, index) => (
+          <span
+            key={index}
+            style={{
+              display: "inline-block",
+              padding: "0 2rem",
+              fontWeight: 700,
+              color: "var(--black)",
+              fontSize: "0.9rem",
+              textTransform: "uppercase"
+            }}
+          >
+            🔥 {winner.user} ganó <strong>{winner.amount} TOKENS</strong> en {winner.subject}
+          </span>
+        ))}
       </div>
     </div>
   );

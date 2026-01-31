@@ -1,126 +1,50 @@
 {
-  "palette_name": "SkillStake Cyberpunk Theme",
+  "palette_name": "SkillStake Neo Brutalist Theme",
   "colors": {
     "background": {
       "main": {
-        "hex": "#0A0E17",
-        "rgba": "rgba(10, 14, 23, 1)",
-        "description": "Deep dark blue-black for main background"
+        "hex": "#FFFFFF",
+        "description": "White main background"
       },
       "card": {
-        "hex": "#161F2E",
-        "rgba": "rgba(22, 31, 46, 1)",
-        "description": "Slightly lighter dark blue for UI elements/cards"
-      },
-      "elevated": {
-        "hex": "#1E293B",
-        "rgba": "rgba(30, 41, 59, 1)",
-        "description": "Even lighter for elevated surfaces and modals"
-      },
-      "progress_bg": {
-        "hex": "#333333",
-        "rgba": "rgba(51, 51, 51, 1)",
-        "description": "Background for progress bars"
+        "hex": "#FFFFFF",
+        "description": "White card background"
       }
     },
     "primary": {
-      "neon_green": {
-        "hex": "#39FF14",
-        "rgba": "rgba(57, 255, 20, 1)",
-        "description": "Main accent color: Money, Success, Primary CTAs"
+      "black": {
+        "hex": "#000000",
+        "description": "Black for text and borders"
       },
-      "neon_green_glow": {
-        "hex": "#39FF14",
-        "rgba": "rgba(57, 255, 20, 0.4)",
-        "description": "Glow effect for neon green elements"
-      },
-      "neon_green_subtle": {
-        "hex": "#39FF14",
-        "rgba": "rgba(57, 255, 20, 0.1)",
-        "description": "Subtle background for selected items"
+      "yellow": {
+        "hex": "#F4F916",
+        "description": "Neon yellow accent (primary CTA)"
       }
     },
     "secondary": {
-      "electric_purple": {
+      "purple": {
         "hex": "#BC13FE",
-        "rgba": "rgba(188, 19, 254, 1)",
-        "description": "Secondary accent: AI, Technology, Brain power"
+        "description": "Vibrant purple accent"
       },
-      "electric_purple_glow": {
-        "hex": "#BC13FE",
-        "rgba": "rgba(188, 19, 254, 0.4)",
-        "description": "Glow effect for purple elements"
-      }
-    },
-    "accent": {
-      "holo_cyan": {
-        "hex": "#00F0FF",
-        "rgba": "rgba(0, 240, 255, 1)",
-        "description": "Tertiary accent for highlights or loading states"
-      },
-      "holo_cyan_glow": {
-        "hex": "#00F0FF",
-        "rgba": "rgba(0, 240, 255, 0.3)",
-        "description": "Glow effect for cyan elements"
-      },
-      "token_gold": {
-        "hex": "#FFD700",
-        "rgba": "rgba(255, 215, 0, 1)",
-        "description": "Gold color for tokens and rewards"
-      },
-      "token_gold_glow": {
-        "hex": "#FFD700",
-        "rgba": "rgba(255, 215, 0, 0.4)",
-        "description": "Glow effect for gold elements"
+      "green": {
+        "hex": "#00E552",
+        "description": "Bright green accent"
       }
     },
     "text": {
-      "body": {
-        "hex": "#E0E6ED",
-        "rgba": "rgba(224, 230, 237, 1)",
-        "description": "Bone white for main readable text"
+      "primary": {
+        "hex": "#000000",
+        "description": "Black primary text"
       },
-      "muted": {
-        "hex": "#94A3B8",
-        "rgba": "rgba(148, 163, 184, 1)",
-        "description": "Gray for secondary text or de-emphasized info"
-      },
-      "heading": {
-        "hex": "#FFFFFF",
-        "rgba": "rgba(255, 255, 255, 1)",
-        "description": "Pure white for headings and important text"
+      "secondary": {
+        "hex": "#555555",
+        "description": "Gray secondary text"
       }
     },
-    "state": {
-      "error_red": {
-        "hex": "#FF2E2E",
-        "rgba": "rgba(255, 46, 46, 1)",
-        "description": "Sharp red for wrong answers or danger areas"
-      },
-      "success_green": {
-        "hex": "#39FF14",
-        "rgba": "rgba(57, 255, 20, 1)",
-        "description": "Success states (same as primary neon green)"
-      },
-      "warning_orange": {
-        "hex": "#FF9500",
-        "rgba": "rgba(255, 149, 0, 1)",
-        "description": "Warning states and caution indicators"
-      }
-    },
-    "gradients": {
-      "hero_glow": {
-        "value": "linear-gradient(90deg, #fff, #00F0FF)",
-        "description": "Text gradient for hero titles"
-      },
-      "purple_fade": {
-        "value": "linear-gradient(180deg, #0A0E17 0%, rgba(188, 19, 254, 0.1) 100%)",
-        "description": "Background gradient for AI sections"
-      },
-      "neon_border": {
-        "value": "linear-gradient(135deg, #39FF14, #BC13FE)",
-        "description": "Gradient for special border effects"
-      }
+    "neo_brutalist": {
+      "border_width": "3px",
+      "shadow_offset": "6px",
+      "description": "Hard shadows with offset, no blur"
     }
   }
 }

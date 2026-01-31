@@ -10,160 +10,155 @@ export default function Hero() {
   }, []);
 
   return (
-    <header 
+    <section
       style={{
-        position: "relative",
-        paddingTop: "8rem",
-        paddingBottom: "4rem",
-        paddingLeft: "1.5rem",
-        paddingRight: "1.5rem",
+        padding: "60px 40px",
         textAlign: "center",
-        overflow: "hidden"
+        background: "var(--white)"
       }}
     >
-      <div 
-        style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          position: "relative",
-          zIndex: 10
-        }}
-      >
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Title */}
         <h1
           style={{
-            fontFamily: "var(--font-heading)",
-            fontSize: "clamp(2.5rem, 5vw, 4rem)",
-            fontWeight: 700,
-            lineHeight: 1.1,
-            marginBottom: "1rem",
-            textAlign: "center"
+            fontSize: "clamp(2.5rem, 6vw, 4rem)",
+            fontWeight: 900,
+            marginBottom: "10px",
+            textTransform: "uppercase",
+            letterSpacing: "-2px",
+            lineHeight: 1.1
           }}
         >
-          <span className="text-gradient">Tu conocimiento</span>
+          TU CONOCIMIENTO
           <br />
-          <span className="text-gradient">es tu divisa</span>
+          <span style={{ color: "var(--purple)" }}>ES TU DIVISA</span>
         </h1>
 
-        {/* Description - CENTERED */}
+        {/* Subtitle */}
         <p
           style={{
-            color: "var(--text-muted)",
+            color: "var(--gray)",
             fontSize: "1.1rem",
-            marginBottom: "2rem",
+            marginBottom: "30px",
             maxWidth: "600px",
             marginLeft: "auto",
-            marginRight: "auto",
-            textAlign: "center",
-            lineHeight: 1.6
+            marginRight: "auto"
           }}
         >
-          Convierte tus PDFs de estudio en torneos gamificados. Acumula Skill Tokens, sube en el ranking y canjea recompensas. La IA es el árbitro.
+          Convierte tus PDFs de estudio en torneos gamificados. Acumula tokens, sube en el ranking y canjea recompensas.
         </p>
 
-        {/* Buttons - CENTERED */}
-        <div 
+        {/* Buttons */}
+        <div
           style={{
             display: "flex",
-            flexDirection: "row",
-            gap: "1rem",
+            gap: "20px",
             justifyContent: "center",
-            alignItems: "center",
-            marginBottom: "3rem",
+            marginBottom: "50px",
             flexWrap: "wrap"
           }}
         >
-          <a href="#" className="btn btn-primary">Crear Sala</a>
-          <a href="#" className="btn btn-secondary">Cómo jugar</a>
+          <button className="btn btn-primary">
+            CREAR SALA →
+          </button>
+          <button className="btn btn-secondary">
+            CÓMO JUGAR
+          </button>
         </div>
 
-        {/* Demo Card with Gradient Border - CENTERED */}
+        {/* Demo Card - Neo Brutalist Style */}
         <div
+          className="neo-box"
           style={{
-            width: "100%",
-            maxWidth: "380px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            padding: "3px",
-            borderRadius: "20px",
-            background: "linear-gradient(135deg, var(--neon-green), var(--electric-purple), var(--holo-cyan))",
-            backgroundSize: "200% 200%",
-            animation: isLoaded ? "gradientBorder 3s ease infinite" : "none",
-            transform: isLoaded ? "rotate(-2deg) translateY(0)" : "rotate(-2deg) translateY(30px)",
+            maxWidth: "400px",
+            margin: "0 auto",
+            padding: "25px",
+            textAlign: "left",
+            transform: isLoaded ? "rotate(-2deg)" : "rotate(-2deg) translateY(20px)",
             opacity: isLoaded ? 1 : 0,
-            transition: "all 0.6s ease-out 0.3s",
-            boxShadow: "0 0 40px rgba(57, 255, 20, 0.2), 0 0 60px rgba(188, 19, 254, 0.15)",
+            transition: "all 0.5s ease"
           }}
         >
-          <style jsx>{`
-            @keyframes gradientBorder {
-              0% { background-position: 0% 50%; }
-              50% { background-position: 100% 50%; }
-              100% { background-position: 0% 50%; }
-            }
-          `}</style>
-          <div
-            style={{
-              background: "var(--bg-card)",
-              padding: "20px",
-              borderRadius: "17px",
-              textAlign: "left"
+          {/* Card Header */}
+          <div 
+            style={{ 
+              display: "flex", 
+              justifyContent: "space-between", 
+              marginBottom: "20px",
+              alignItems: "center"
             }}
           >
-            {/* Card Header */}
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "20px", alignItems: "center" }}>
-              <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>Anatomía I</span>
-              <span style={{ color: "var(--token-gold)", fontWeight: "bold" }}>500 TOKENS 🪙</span>
-            </div>
+            <span 
+              style={{ 
+                background: "var(--purple)",
+                color: "white",
+                padding: "4px 10px",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                border: "2px solid var(--black)"
+              }}
+            >
+              ANATOMÍA I
+            </span>
+            <span style={{ fontWeight: 900 }}>500 TOKENS 🪙</span>
+          </div>
 
-            {/* Progress Bar */}
-            <div style={{ height: "10px", background: "var(--bg-progress)", borderRadius: "5px", marginBottom: "20px", overflow: "hidden" }}>
-              <div style={{ 
+          {/* Progress Bar */}
+          <div 
+            style={{ 
+              height: "12px", 
+              background: "#eee", 
+              border: "2px solid var(--black)",
+              marginBottom: "20px"
+            }}
+          >
+            <div 
+              style={{ 
                 width: "70%", 
                 height: "100%", 
-                background: "linear-gradient(90deg, var(--neon-green), var(--holo-cyan))", 
-                borderRadius: "5px" 
-              }}></div>
+                background: "var(--green)"
+              }}
+            />
+          </div>
+
+          {/* Question */}
+          <h4 
+            style={{ 
+              marginBottom: "15px", 
+              fontWeight: 700,
+              fontSize: "1.1rem"
+            }}
+          >
+            ¿Cuál es el hueso más largo?
+          </h4>
+
+          {/* Options */}
+          <div style={{ display: "grid", gap: "10px" }}>
+            <div
+              style={{
+                padding: "12px 16px",
+                border: "3px solid var(--black)",
+                fontWeight: 600,
+                cursor: "pointer",
+                background: "var(--white)"
+              }}
+            >
+              Tibia
             </div>
-
-            {/* Question */}
-            <h4 style={{ marginBottom: "10px", fontFamily: "var(--font-heading)", color: "white", textAlign: "center" }}>
-              ¿Cuál es el hueso más largo?
-            </h4>
-
-            {/* Options */}
-            <div style={{ display: "grid", gap: "10px" }}>
-              {/* Option 1 */}
-              <div style={{ 
-                padding: "12px 16px", 
-                border: "1px solid var(--text-muted)", 
-                borderRadius: "8px", 
-                fontSize: "0.9rem",
-                color: "var(--text-body)",
-                background: "transparent",
-                textAlign: "center"
-              }}>
-                Tibia
-              </div>
-              
-              {/* Option 2 (Selected) */}
-              <div style={{ 
-                padding: "12px 16px", 
-                background: "var(--neon-green-subtle)", 
-                border: "2px solid var(--neon-green)", 
-                borderRadius: "8px", 
-                fontSize: "0.9rem", 
-                color: "var(--neon-green)",
-                fontWeight: "500",
-                textAlign: "center"
-              }}>
-                Fémur ✅
-              </div>
+            <div
+              style={{
+                padding: "12px 16px",
+                border: "3px solid var(--black)",
+                fontWeight: 700,
+                cursor: "pointer",
+                background: "var(--green)"
+              }}
+            >
+              Fémur ✓
             </div>
           </div>
         </div>
-
       </div>
-    </header>
+    </section>
   );
 }

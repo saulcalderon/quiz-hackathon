@@ -5,33 +5,28 @@ import { useEffect, useRef, useState } from "react";
 interface CycleStep {
   number: string;
   icon: string;
-  iconColor?: string;
   title: string;
   description: string;
 }
 
 const steps: CycleStep[] = [
   {
-    number: "01",
-    icon: "☁️",
-    title: "Upload",
-    description:
-      "Sube tus apuntes (PDFs, notas). Nuestra IA genera un quiz validado al instante para desafiar tu memoria.",
+    number: "1",
+    icon: "📤",
+    title: "UPLOAD",
+    description: "Sube tus apuntes (PDFs, notas). Nuestra IA genera un quiz validado al instante.",
   },
   {
-    number: "02",
+    number: "2",
     icon: "⚡",
-    iconColor: "var(--neon-green)",
-    title: "Challenge",
-    description:
-      "Crea una sala y define la entrada en Skill Tokens. Invita a tu grupo de estudio a competir.",
+    title: "CHALLENGE",
+    description: "Crea una sala, define la entrada en tokens e invita a tu grupo a competir.",
   },
   {
-    number: "03",
-    icon: "🎁",
-    title: "Rewards",
-    description:
-      "El que más sabe se lleva el pozo de Tokens. Úsalos para canjear beneficios o subir de nivel en la plataforma.",
+    number: "3",
+    icon: "🏆",
+    title: "REWARDS",
+    description: "El que más sabe se lleva el pozo. Úsalos para canjear beneficios.",
   },
 ];
 
@@ -66,107 +61,83 @@ export default function StudyCycle() {
   }, []);
 
   return (
-    <section style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
-      <div className="container mx-auto px-6">
+    <section style={{ padding: "60px 40px", background: "var(--white)" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Section Title */}
-        <h2 
-          style={{ 
-            fontFamily: "var(--font-heading)", 
-            fontSize: "2rem", 
-            color: "var(--text-heading)",
+        <h2
+          style={{
+            fontSize: "2.5rem",
+            fontWeight: 900,
             textAlign: "center",
-            marginBottom: "3rem"
+            marginBottom: "50px",
+            textTransform: "uppercase",
+            letterSpacing: "-1px"
           }}
         >
-          El Ciclo de Estudio
+          CÓMO FUNCIONA
         </h2>
-        
-        {/* 3 Cards Grid - Wide Gutters */}
-        <div 
+
+        {/* 3 Cards Grid */}
+        <div
           className="study-cycle-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "2rem", /* Wide gutters between cards */
-            maxWidth: "1100px",
-            margin: "0 auto"
+            gap: "30px"
           }}
         >
           {steps.map((step, index) => (
             <div
               key={step.number}
-              ref={(el) => {cardsRef.current[index] = el}}
+              ref={(el) => { cardsRef.current[index] = el }}
+              className="neo-box"
               style={{
-                backgroundColor: "var(--bg-card)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                padding: "2rem",
-                borderRadius: "16px",
+                padding: "30px",
                 position: "relative",
-                overflow: "hidden",
                 opacity: visibleCards[index] ? 1 : 0,
                 transform: visibleCards[index] ? "translateY(0)" : "translateY(20px)",
-                transition: `all 0.5s ease ${index * 0.15}s`,
+                transition: `all 0.4s ease ${index * 0.1}s`
               }}
-              className="hover:-translate-y-2 transition-transform duration-300"
             >
-              {/* Step Number - Large Background Number */}
-              <span
+              {/* Step Number Badge */}
+              <div
                 style={{
-                  fontSize: "5rem",
-                  fontWeight: 700,
-                  color: "rgba(57, 255, 20, 0.1)",
-                  position: "absolute",
-                  top: "-10px",
-                  right: "15px",
-                  fontFamily: "var(--font-heading)",
-                  lineHeight: 1,
-                  pointerEvents: "none"
+                  width: "40px",
+                  height: "40px",
+                  background: "var(--purple)",
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: 900,
+                  fontSize: "1.2rem",
+                  marginBottom: "20px",
+                  border: "3px solid var(--black)"
                 }}
               >
                 {step.number}
-              </span>
+              </div>
 
               {/* Icon */}
-              <span
-                style={{
-                  fontSize: "2.5rem",
-                  marginBottom: "1rem",
-                  display: "block",
-                  color: step.iconColor || "inherit"
-                }}
-              >
+              <div style={{ fontSize: "2.5rem", marginBottom: "15px" }}>
                 {step.icon}
-              </span>
+              </div>
 
               {/* Title */}
               <h3
                 style={{
-                  marginBottom: "0.75rem",
-                  fontSize: "1.4rem",
-                  fontFamily: "var(--font-heading)",
-                  color: "var(--text-heading)"
+                  fontWeight: 900,
+                  fontSize: "1.3rem",
+                  marginBottom: "10px",
+                  textTransform: "uppercase"
                 }}
               >
                 {step.title}
               </h3>
 
               {/* Description */}
-              <p
-                style={{
-                  color: "var(--text-muted)",
-                  fontSize: "0.9rem",
-                  lineHeight: 1.6
-                }}
-              >
-                {step.number === "02" ? (
-                  <>
-                    Crea una sala y define la entrada en{" "}
-                    <strong style={{ color: "var(--neon-green)" }}>Skill Tokens</strong>. 
-                    Invita a tu grupo de estudio a competir.
-                  </>
-                ) : (
-                  step.description
-                )}
+              <p style={{ color: "var(--gray)", lineHeight: 1.6 }}>
+                {step.description}
               </p>
             </div>
           ))}

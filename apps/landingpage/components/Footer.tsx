@@ -2,97 +2,85 @@ export default function Footer() {
   return (
     <footer
       style={{
-        paddingTop: "2.5rem",
-        paddingBottom: "2.5rem",
-        paddingLeft: "1.5rem",
-        paddingRight: "1.5rem",
-        borderTop: "1px solid rgba(255,255,255,0.1)",
+        padding: "30px 40px",
+        borderTop: "3px solid var(--black)",
+        background: "var(--white)",
+        textAlign: "center"
       }}
     >
-      <div 
+      {/* Logo */}
+      <div
         style={{
-          maxWidth: "1200px",
-          margin: "0 auto",
-          textAlign: "center"
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
+          marginBottom: "20px"
         }}
       >
-        {/* Logo */}
-        <div 
+        <div
           style={{
+            width: "30px",
+            height: "30px",
+            background: "var(--yellow)",
+            border: "2px solid var(--black)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "0.5rem",
-            marginBottom: "1rem"
+            fontWeight: 900,
+            fontSize: "0.6rem"
           }}
         >
-          <span
-            style={{ 
-              fontFamily: "var(--font-heading)",
-              fontSize: "1.125rem",
-              fontWeight: 700
+          SS
+        </div>
+        <span style={{ fontWeight: 900, fontSize: "1.1rem" }}>
+          SKILLSTAKE
+        </span>
+      </div>
+
+      {/* Links */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "30px",
+          marginBottom: "20px"
+        }}
+      >
+        {["TÉRMINOS", "REGLAS"].map((link) => (
+          <a
+            key={link}
+            href="#"
+            style={{
+              color: "var(--black)",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              textDecoration: "none"
             }}
           >
-            Skill<span style={{ color: "var(--neon-green)" }}>Stake</span>
-          </span>
-        </div>
-
-        {/* Links */}
-        <div 
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "1.5rem",
-            marginBottom: "1.5rem"
-          }}
-        >
-          {["Términos", "Reglas de la Comunidad"].map((link) => (
-            <a
-              key={link}
-              href="#"
-              style={{ 
-                color: "var(--text-muted)",
-                fontSize: "0.875rem",
-                transition: "color 0.3s"
-              }}
-            >
-              {link}
-            </a>
-          ))}
-        </div>
-
-        {/* Disclaimer - CENTERED */}
-        <p
-          style={{ 
-            color: "var(--text-muted)", 
-            opacity: 0.6,
-            fontSize: "0.75rem",
-            maxWidth: "500px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginBottom: "1rem",
-            lineHeight: 1.6,
-            textAlign: "center"
-          }}
-        >
-          SkillStake es una plataforma de educación gamificada. Los
-          &quot;Tokens&quot; son unidades de puntaje virtual y no representan
-          apuestas con dinero fiduciario. El objetivo es incentivar el hábito de
-          estudio.
-        </p>
-
-        {/* Copyright */}
-        <p
-          style={{ 
-            color: "var(--text-muted)", 
-            opacity: 0.5,
-            fontSize: "0.75rem",
-            textAlign: "center"
-          }}
-        >
-          © 2024 SkillStake Project.
-        </p>
+            {link}
+          </a>
+        ))}
       </div>
+
+      {/* Disclaimer */}
+      <p
+        style={{
+          color: "var(--gray)",
+          fontSize: "0.75rem",
+          maxWidth: "500px",
+          margin: "0 auto 15px",
+          lineHeight: 1.5
+        }}
+      >
+        SkillStake es una plataforma de educación gamificada. Los "Tokens" son 
+        unidades de puntaje virtual. El objetivo es incentivar el hábito de estudio.
+      </p>
+
+      {/* Copyright */}
+      <p style={{ color: "var(--gray)", fontSize: "0.75rem" }}>
+        © 2024 SKILLSTAKE PROJECT
+      </p>
     </footer>
   );
 }
