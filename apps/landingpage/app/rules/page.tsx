@@ -26,8 +26,8 @@ const content: Record<Language, {
     lastUpdated: "Last updated:",
     sections: [
       {
-        title: "1. WHAT IS SKILLSTAKE?",
-        content: "SkillStake is a High-Stakes Learning platform where university students compete in real-time AI-generated trivia tournaments. Users stake tokens on their own ability to answer correctly, transforming passive and boring study into an exciting competition.",
+        title: "1. WHAT IS StakeStudy?",
+        content: "StakeStudy is a High-Stakes Learning platform where university students compete in real-time AI-generated trivia tournaments. Users stake tokens on their own ability to answer correctly, transforming passive and boring study into an exciting competition.",
         list: []
       },
       {
@@ -54,7 +54,7 @@ const content: Record<Language, {
       },
       {
         title: "4. FAIR PLAY POLICY",
-        content: "SkillStake is a SKILL-BASED GAME, not gambling:",
+        content: "StakeStudy is a SKILL-BASED GAME, not gambling:",
         list: [
           "Winning depends 100% on your knowledge, not luck",
           "Our AI acts as an impartial referee",
@@ -101,7 +101,7 @@ const content: Record<Language, {
         title: "8. OUR COMMITMENT",
         content: [
           "\"We're not creating gambling addicts, we're creating students obsessed with learning. We use risk psychology to combat academic apathy.\"",
-          "SkillStake uses AI as an impartial referee, guaranteeing fair play and ensuring no one has answers ahead of time. It's like Kahoot, but where you really have skin in the game."
+          "StakeStudy uses AI as an impartial referee, guaranteeing fair play and ensuring no one has answers ahead of time. It's like Kahoot, but where you really have skin in the game."
         ],
         list: []
       }
@@ -113,8 +113,8 @@ const content: Record<Language, {
     lastUpdated: "Última actualización:",
     sections: [
       {
-        title: "1. ¿QUÉ ES SKILLSTAKE?",
-        content: "SkillStake es una plataforma de Aprendizaje de Alto Riesgo donde estudiantes universitarios compiten en torneos de trivia generados por IA en tiempo real. Los usuarios apuestan tokens en su propia capacidad para responder correctamente, transformando el estudio pasivo y aburrido en una competencia emocionante.",
+        title: "1. ¿QUÉ ES StakeStudy?",
+        content: "StakeStudy es una plataforma de Aprendizaje de Alto Riesgo donde estudiantes universitarios compiten en torneos de trivia generados por IA en tiempo real. Los usuarios apuestan tokens en su propia capacidad para responder correctamente, transformando el estudio pasivo y aburrido en una competencia emocionante.",
         list: []
       },
       {
@@ -141,7 +141,7 @@ const content: Record<Language, {
       },
       {
         title: "4. POLÍTICA DE JUEGO LIMPIO",
-        content: "SkillStake es un JUEGO DE HABILIDAD, no de azar:",
+        content: "StakeStudy es un JUEGO DE HABILIDAD, no de azar:",
         list: [
           "Ganar depende 100% de tu conocimiento, no de la suerte",
           "Nuestra IA actúa como árbitro imparcial",
@@ -188,7 +188,7 @@ const content: Record<Language, {
         title: "8. NUESTRO COMPROMISO",
         content: [
           "\"No estamos creando ludópatas, estamos creando estudiantes obsesionados con aprender. Usamos la psicología del riesgo para combatir la apatía académica.\"",
-          "SkillStake usa la IA como árbitro imparcial, garantizando juego limpio y asegurando que nadie tenga las respuestas antes de tiempo. Es como Kahoot, pero donde realmente te juegas la piel."
+          "StakeStudy usa la IA como árbitro imparcial, garantizando juego limpio y asegurando que nadie tenga las respuestas antes de tiempo. Es como Kahoot, pero donde realmente te juegas la piel."
         ],
         list: []
       }
@@ -250,7 +250,7 @@ export default function RulesPage() {
           >
             SS
           </div>
-          SKILLSTAKE
+          StakeStudy
         </Link>
 
         <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
@@ -385,7 +385,7 @@ export default function RulesPage() {
         }}
       >
         <p style={{ color: "var(--gray)", fontSize: "0.75rem" }}>
-          © 2024 SKILLSTAKE PROJECT
+          © 2026 StakeStudy PROJECT
         </p>
       </footer>
     </div>

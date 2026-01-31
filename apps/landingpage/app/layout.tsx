@@ -15,12 +15,12 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "SkillStake | Tokenized Learning",
+  title: "StakeStudy | Tokenized Learning",
   description: "Convierte tus PDFs de estudio en torneos gamificados. Acumula Skill Tokens, sube en el ranking y canjea recompensas. La IA es el árbitro.",
   keywords: ["educación", "gamificación", "blockchain", "tokens", "estudio", "quiz", "IA"],
-  authors: [{ name: "SkillStake Project" }],
+  authors: [{ name: "StakeStudy Project" }],
   openGraph: {
-    title: "SkillStake | Tokenized Learning",
+    title: "StakeStudy | Tokenized Learning",
     description: "Tu conocimiento es tu divisa. Convierte tus apuntes en competiciones.",
     type: "website",
     locale: "es_ES",
