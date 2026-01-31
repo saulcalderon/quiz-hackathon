@@ -1518,27 +1518,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client-runtime-utils@npm:7.3.0":
-  version: 7.3.0
-  resolution: "@prisma/client-runtime-utils@npm:7.3.0"
-  checksum: 10c0/7a1ce7154799efd84c887d5091088b57c1a3733f8686ed5308157f8ee35c4571ed6a16947bb45a1428f4eeb68f535ad48a9b106403f0a587464d1e44c8501a37
-  languageName: node
-  linkType: hard
-
-"@prisma/client@npm:^7.3.0":
-  version: 7.3.0
-  resolution: "@prisma/client@npm:7.3.0"
-  dependencies:
-    "@prisma/client-runtime-utils": "npm:7.3.0"
+"@prisma/client@npm:^6.16.2":
+  version: 6.19.2
+  resolution: "@prisma/client@npm:6.19.2"
   peerDependencies:
     prisma: "*"
-    typescript: ">=5.4.0"
+    typescript: ">=5.1.0"
   peerDependenciesMeta:
     prisma:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/375f7a87a43dbf2a2afa3df50c3121edae7e46845faabab707f2c702aad281811682b81cd4a9bfdfb2dcafddaec3e48b1054c55f3813c10db61cb7e80091c612
+  checksum: 10c0/b1b81171af50627275f1f66ee44652363eb9b3e0fac60590f15a99e48ca434f0cbf8580c252f0b8f4268468be219ba4f18e338c6275a038f8473fad809a782f7
   languageName: node
   linkType: hard
 
@@ -1613,7 +1604,7 @@ __metadata:
     "@nestjs/platform-express": "npm:^11.0.1"
     "@nestjs/schematics": "npm:^11.0.0"
     "@nestjs/testing": "npm:^11.0.1"
-    "@prisma/client": "npm:^7.3.0"
+    "@prisma/client": "npm:^6.16.2"
     "@supabase/supabase-js": "npm:^2.57.4"
     "@types/express": "npm:^5.0.0"
     "@types/jest": "npm:^30.0.0"
