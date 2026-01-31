@@ -17,8 +17,8 @@ const translations: Record<Language, Record<string, string>> = {
     "hero.title1": "YOUR KNOWLEDGE",
     "hero.title2": "IS YOUR CURRENCY",
     "hero.subtitle": "Turn your study PDFs into gamified tournaments. Earn tokens, climb the leaderboard, and redeem rewards.",
-    "hero.createRoom": "CREATE ROOM",
-    "hero.howToPlay": "HOW TO PLAY",
+    "hero.login": "LOGIN",
+    "hero.register": "REGISTER",
     "hero.question": "What is the longest bone?",
     
     // Ticker
@@ -52,8 +52,8 @@ const translations: Record<Language, Record<string, string>> = {
     "hero.title1": "TU CONOCIMIENTO",
     "hero.title2": "ES TU DIVISA",
     "hero.subtitle": "Convierte tus PDFs de estudio en torneos gamificados. Acumula tokens, sube en el ranking y canjea recompensas.",
-    "hero.createRoom": "CREAR SALA",
-    "hero.howToPlay": "CÓMO JUGAR",
+    "hero.login": "INICIAR SESIÓN",
+    "hero.register": "REGISTRARSE",
     "hero.question": "¿Cuál es el hueso más largo?",
     
     // Ticker

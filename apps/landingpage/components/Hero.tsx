@@ -2,14 +2,33 @@
 
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import appConfig from "@/appConfig.json";
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     setIsLoaded(true);
   }, []);
+
+  const handleLogin = () => {
+    const url = appConfig.links.login[language as keyof typeof appConfig.links.login];
+    if (appConfig.external.openInNewTab) {
+      window.open(url, "_blank");
+    } else {
+      window.location.href = url;
+    }
+  };
+
+  const handleRegister = () => {
+    const url = appConfig.links.register[language as keyof typeof appConfig.links.register];
+    if (appConfig.external.openInNewTab) {
+      window.open(url, "_blank");
+    } else {
+      window.location.href = url;
+    }
+  };
 
   return (
     <section
@@ -50,7 +69,7 @@ export default function Hero() {
           {t("hero.subtitle")}
         </p>
 
-        {/* Buttons */}
+        {/* Buttons - Login & Register */}
         <div
           style={{
             display: "flex",
@@ -60,11 +79,11 @@ export default function Hero() {
             flexWrap: "wrap"
           }}
         >
-          <button className="btn btn-primary">
-            {t("hero.createRoom")} →
+          <button className="btn btn-primary" onClick={handleLogin}>
+            {t("hero.login")} →
           </button>
-          <button className="btn btn-secondary">
-            {t("hero.howToPlay")}
+          <button className="btn btn-secondary" onClick={handleRegister}>
+            {t("hero.register")}
           </button>
         </div>
 
