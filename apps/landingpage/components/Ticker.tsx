@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface Winner {
   id: number;
@@ -11,15 +12,16 @@ interface Winner {
 
 const winners: Winner[] = [
   { id: 1, user: "AlexDev", amount: 50, subject: "Java" },
-  { id: 2, user: "SarahMed", amount: 120, subject: "Anatomía" },
-  { id: 3, user: "LawMaster", amount: 85, subject: "Derecho Civil" },
-  { id: 4, user: "CryptoKid", amount: 200, subject: "Economía" },
-  { id: 5, user: "EngineerX", amount: 45, subject: "Física II" },
+  { id: 2, user: "SarahMed", amount: 120, subject: "Anatomy" },
+  { id: 3, user: "LawMaster", amount: 85, subject: "Civil Law" },
+  { id: 4, user: "CryptoKid", amount: 200, subject: "Economics" },
+  { id: 5, user: "EngineerX", amount: 45, subject: "Physics II" },
 ];
 
 export default function Ticker() {
   const tickerRef = useRef<HTMLDivElement>(null);
   const [animationDuration, setAnimationDuration] = useState(20);
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (tickerRef.current) {
@@ -59,7 +61,7 @@ export default function Ticker() {
               textTransform: "uppercase"
             }}
           >
-            🔥 {winner.user} ganó <strong>{winner.amount} TOKENS</strong> en {winner.subject}
+            🔥 {winner.user} {t("ticker.won")} <strong>{winner.amount} TOKENS</strong> {t("ticker.in")} {winner.subject}
           </span>
         ))}
       </div>

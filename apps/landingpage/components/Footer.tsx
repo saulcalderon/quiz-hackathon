@@ -1,4 +1,10 @@
+"use client";
+
+import { useLanguage } from "@/context/LanguageContext";
+
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer
       style={{
@@ -47,20 +53,28 @@ export default function Footer() {
           marginBottom: "20px"
         }}
       >
-        {["TÉRMINOS", "REGLAS"].map((link) => (
-          <a
-            key={link}
-            href="#"
-            style={{
-              color: "var(--black)",
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              textDecoration: "none"
-            }}
-          >
-            {link}
-          </a>
-        ))}
+        <a
+          href="#"
+          style={{
+            color: "var(--black)",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            textDecoration: "none"
+          }}
+        >
+          {t("footer.terms")}
+        </a>
+        <a
+          href="#"
+          style={{
+            color: "var(--black)",
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            textDecoration: "none"
+          }}
+        >
+          {t("footer.rules")}
+        </a>
       </div>
 
       {/* Disclaimer */}
@@ -73,8 +87,7 @@ export default function Footer() {
           lineHeight: 1.5
         }}
       >
-        SkillStake es una plataforma de educación gamificada. Los "Tokens" son 
-        unidades de puntaje virtual. El objetivo es incentivar el hábito de estudio.
+        {t("footer.disclaimer")}
       </p>
 
       {/* Copyright */}

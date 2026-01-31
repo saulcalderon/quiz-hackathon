@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Hero() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     setIsLoaded(true);
@@ -29,9 +31,9 @@ export default function Hero() {
             lineHeight: 1.1
           }}
         >
-          TU CONOCIMIENTO
+          {t("hero.title1")}
           <br />
-          <span style={{ color: "var(--purple)" }}>ES TU DIVISA</span>
+          <span style={{ color: "var(--purple)" }}>{t("hero.title2")}</span>
         </h1>
 
         {/* Subtitle */}
@@ -45,7 +47,7 @@ export default function Hero() {
             marginRight: "auto"
           }}
         >
-          Convierte tus PDFs de estudio en torneos gamificados. Acumula tokens, sube en el ranking y canjea recompensas.
+          {t("hero.subtitle")}
         </p>
 
         {/* Buttons */}
@@ -59,10 +61,10 @@ export default function Hero() {
           }}
         >
           <button className="btn btn-primary">
-            CREAR SALA →
+            {t("hero.createRoom")} →
           </button>
           <button className="btn btn-secondary">
-            CÓMO JUGAR
+            {t("hero.howToPlay")}
           </button>
         </div>
 
@@ -98,7 +100,7 @@ export default function Hero() {
                 border: "2px solid var(--black)"
               }}
             >
-              ANATOMÍA I
+              ANATOMY I
             </span>
             <span style={{ fontWeight: 900 }}>500 TOKENS 🪙</span>
           </div>
@@ -129,7 +131,7 @@ export default function Hero() {
               fontSize: "1.1rem"
             }}
           >
-            ¿Cuál es el hueso más largo?
+            {t("hero.question")}
           </h4>
 
           {/* Options */}
@@ -154,7 +156,7 @@ export default function Hero() {
                 background: "var(--green)"
               }}
             >
-              Fémur ✓
+              Femur ✓
             </div>
           </div>
         </div>

@@ -1,38 +1,33 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-interface CycleStep {
-  number: string;
-  icon: string;
-  title: string;
-  description: string;
-}
-
-const steps: CycleStep[] = [
-  {
-    number: "1",
-    icon: "📤",
-    title: "UPLOAD",
-    description: "Sube tus apuntes (PDFs, notas). Nuestra IA genera un quiz validado al instante.",
-  },
-  {
-    number: "2",
-    icon: "⚡",
-    title: "CHALLENGE",
-    description: "Crea una sala, define la entrada en tokens e invita a tu grupo a competir.",
-  },
-  {
-    number: "3",
-    icon: "🏆",
-    title: "REWARDS",
-    description: "El que más sabe se lleva el pozo. Úsalos para canjear beneficios.",
-  },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function StudyCycle() {
   const [visibleCards, setVisibleCards] = useState<boolean[]>([false, false, false]);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const { t } = useLanguage();
+
+  const steps = [
+    {
+      number: "1",
+      icon: "📤",
+      title: t("cycle.step1.title"),
+      description: t("cycle.step1.desc"),
+    },
+    {
+      number: "2",
+      icon: "⚡",
+      title: t("cycle.step2.title"),
+      description: t("cycle.step2.desc"),
+    },
+    {
+      number: "3",
+      icon: "🏆",
+      title: t("cycle.step3.title"),
+      description: t("cycle.step3.desc"),
+    },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -74,7 +69,7 @@ export default function StudyCycle() {
             letterSpacing: "-1px"
           }}
         >
-          CÓMO FUNCIONA
+          {t("cycle.title")}
         </h2>
 
         {/* 3 Cards Grid */}

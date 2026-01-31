@@ -1,6 +1,16 @@
 "use client";
 
+import { useLanguage } from "@/context/LanguageContext";
+
 export default function AISection() {
+  const { t } = useLanguage();
+
+  const features = [
+    { icon: "⚖️", label: t("ai.impartial") },
+    { icon: "🤖", label: t("ai.intelligent") },
+    { icon: "🛡️", label: t("ai.secure") },
+  ];
+
   return (
     <section style={{ padding: "60px 40px", background: "var(--white)" }}>
       <div style={{ maxWidth: "900px", margin: "0 auto" }}>
@@ -27,7 +37,7 @@ export default function AISection() {
               border: "3px solid var(--black)"
             }}
           >
-            ⚡ POWERED BY AI
+            ⚡ {t("ai.badge")}
           </span>
 
           {/* Title */}
@@ -40,7 +50,7 @@ export default function AISection() {
               letterSpacing: "-1px"
             }}
           >
-            FAIR PLAY GARANTIZADO
+            {t("ai.title")}
           </h2>
 
           {/* Description */}
@@ -53,8 +63,7 @@ export default function AISection() {
               lineHeight: 1.6
             }}
           >
-            Adiós a la subjetividad. Nuestra IA valida las respuestas en tiempo real. 
-            Nadie tiene ventaja, solo gana el que realmente estudió.
+            {t("ai.desc")}
           </p>
 
           {/* Feature Icons */}
@@ -66,11 +75,7 @@ export default function AISection() {
               flexWrap: "wrap"
             }}
           >
-            {[
-              { icon: "⚖️", label: "IMPARCIAL" },
-              { icon: "🤖", label: "INTELIGENTE" },
-              { icon: "🛡️", label: "SEGURO" },
-            ].map((item, index) => (
+            {features.map((item, index) => (
               <div
                 key={index}
                 style={{
