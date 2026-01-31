@@ -114,7 +114,7 @@ export default function ResultsPage({
       >
         <Podium
           leaderboard={leaderboard}
-          currentUserId={userId}
+          currentUserId={userId ?? undefined}
           payout={payout}
         />
       </motion.div>
@@ -153,7 +153,7 @@ export default function ResultsPage({
         transition={{ delay: 1 }}
         className="mb-8"
       >
-        <FinalLeaderboard leaderboard={leaderboard} currentUserId={userId} />
+        <FinalLeaderboard leaderboard={leaderboard} currentUserId={userId ?? undefined} />
       </motion.div>
 
       {/* Actions */}
