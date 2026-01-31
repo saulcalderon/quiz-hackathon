@@ -103,6 +103,36 @@ export class LobbyService {
     return participation;
   }
 
+  async leaveLobby(code: string, userId: string): Promise<void> {
+    const lobby = await this.getLobby(code);
+
+    if (lobby.status !== LobbyStatus.WAITING) {
+      throw new BadRequestException('Cannot leave an active game');
+    }
+
+    // Host cannot leave - they must close the lobby
+    if (lobby.hostId === userId) {
+      throw new BadRequestException('Host cannot leave. Close the lobby instead.');
+    }
+
+    const participation = lobby.participations.find((p) => p.userId === userId);
+
+    if (!participation) {
+      return; // Not in lobby, nothing to do
+    }
+
+    await this.prisma.participation.delete({
+      where: { id: participation.id },
+    });
+
+    await this.broadcast(code, 'player_left', {
+      playerId: userId,
+      playerCount: lobby.participations.length - 1,
+    });
+
+    this.logger.log(`Player ${userId} left lobby ${code}`);
+  }
+
   async generateQuestions(code: string, hostId: string, topic: string, notes?: string): Promise<void> {
     const lobby = await this.getLobby(code);
 
@@ -219,7 +249,7 @@ export class LobbyService {
       const currentQ = questions[currentIndex];
       const leaderboard = lobby.participations
         .map((p) => ({
-          oduserId: p.userId,
+          userId: p.userId,
           score: p.score,
           speedXp: p.speedXp,
         }))

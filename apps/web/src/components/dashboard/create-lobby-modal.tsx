@@ -43,22 +43,23 @@ export function CreateLobbyModal({ isOpen, onClose }: CreateLobbyModalProps) {
     setIsLoading(true);
 
     try {
-      const lobby = await api.post<{ code: string }>("/lobbies", {
+      const response = await api.post<{ data: { code: string } }>("/lobbies", {
         entryFee: entryFeeNum,
         topic,
         notes: notes || undefined,
       });
+      const lobbyCode = response.data.code;
 
       // Join the lobby as host
-      await api.post(`/lobbies/${lobby.code}/join`);
+      await api.post(`/lobbies/${lobbyCode}/join`);
 
       // Generate questions
-      await api.post(`/lobbies/${lobby.code}/generate`, {
+      await api.post(`/lobbies/${lobbyCode}/generate`, {
         topic,
         notes: notes || undefined,
       });
 
-      router.push(`/lobby/${lobby.code}`);
+      router.push(`/lobby/${lobbyCode}`);
     } catch (err) {
       if (err instanceof ApiError) {
         setError(err.message);

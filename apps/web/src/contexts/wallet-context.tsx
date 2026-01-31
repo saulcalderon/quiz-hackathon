@@ -13,6 +13,7 @@ import { api } from "@/lib/api";
 import { User } from "@/types";
 
 interface WalletContextType {
+  userId: string | null;  // Internal database user ID
   balance: number;
   xp: number;
   isLoading: boolean;
@@ -31,6 +32,7 @@ interface WalletProviderProps {
 
 export function WalletProvider({ children }: WalletProviderProps) {
   const { user, session } = useAuth();
+  const [userId, setUserId] = useState<string | null>(null);
   const [balance, setBalance] = useState(0);
   const [xp, setXp] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -39,6 +41,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
 
   const fetchBalance = useCallback(async () => {
     if (!user || !session) {
+      setUserId(null);
       setBalance(0);
       setXp(0);
       setIsLoading(false);
@@ -87,6 +90,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
   return (
     <WalletContext.Provider
       value={{
+        userId,
         balance,
         xp,
         isLoading,

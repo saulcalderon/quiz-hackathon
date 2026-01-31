@@ -8,9 +8,10 @@ import { LobbyPlayer } from "@/types";
 interface PlayerGridProps {
   players: LobbyPlayer[];
   hostId?: string;
+  currentUserId?: string | null;
 }
 
-export function PlayerGrid({ players, hostId }: PlayerGridProps) {
+export function PlayerGrid({ players, hostId, currentUserId }: PlayerGridProps) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
       <AnimatePresence mode="popLayout">
@@ -28,7 +29,9 @@ export function PlayerGrid({ players, hostId }: PlayerGridProps) {
             }}
             className="relative"
           >
-            <div className="bg-background border-4 border-black shadow-brutal p-4 flex flex-col items-center">
+            <div className={`bg-background border-4 shadow-brutal p-4 flex flex-col items-center ${
+              player.userId === currentUserId ? 'border-accent' : 'border-black'
+            }`}>
               {/* Host Crown */}
               {player.userId === hostId && (
                 <div className="absolute -top-3 -right-3 w-8 h-8 bg-primary border-4 border-black flex items-center justify-center">
@@ -39,7 +42,7 @@ export function PlayerGrid({ players, hostId }: PlayerGridProps) {
               <Avatar userId={player.userId} size="lg" className="mb-2" />
 
               <div className="font-heading text-sm uppercase truncate w-full text-center">
-                Player {index + 1}
+                {player.userId === currentUserId ? 'You' : `Player ${index + 1}`}
               </div>
 
               <div className="text-xs text-gray-500 mt-1">

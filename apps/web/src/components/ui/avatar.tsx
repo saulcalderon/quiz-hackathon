@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 
 interface AvatarProps {
-  userId: string;
+  userId?: string | null;
   size?: "sm" | "md" | "lg" | "xl";
   className?: string;
 }
@@ -34,13 +34,14 @@ const avatarStyles = [
 
 export function Avatar({ userId, size = "md", className = "" }: AvatarProps) {
   const avatarUrl = useMemo(() => {
+    const id = userId || "anonymous";
     // Use a consistent style based on userId hash
     const styleIndex =
-      userId.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) %
+      id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) %
       avatarStyles.length;
     const style = avatarStyles[styleIndex];
 
-    return `https://api.dicebear.com/7.x/${style}/svg?seed=${userId}&backgroundColor=ffff00,a020f0,00ff00`;
+    return `https://api.dicebear.com/7.x/${style}/svg?seed=${id}&backgroundColor=ffff00,a020f0,00ff00`;
   }, [userId]);
 
   return (

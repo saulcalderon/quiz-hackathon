@@ -14,8 +14,8 @@ export function useLobby(code: string) {
 
   const fetchLobby = useCallback(async () => {
     try {
-      const data = await api.get<Lobby>(`/lobbies/${code}`);
-      setLobby(data);
+      const response = await api.get<{ data: Lobby }>(`/lobbies/${code}`);
+      setLobby(response.data);
       setError(null);
     } catch (err) {
       setError("Failed to load lobby");
@@ -24,6 +24,17 @@ export function useLobby(code: string) {
       setIsLoading(false);
     }
   }, [code]);
+
+  const leaveLobby = useCallback(async () => {
+    try {
+      await api.post(`/lobbies/${code}/leave`);
+      router.push("/dashboard");
+    } catch (err) {
+      console.error("Failed to leave lobby:", err);
+      // Navigate anyway - user wants to leave
+      router.push("/dashboard");
+    }
+  }, [code, router]);
 
   useEffect(() => {
     fetchLobby();
@@ -34,6 +45,10 @@ export function useLobby(code: string) {
 
     channel
       .on("broadcast", { event: "player_joined" }, () => {
+        // Refetch lobby to get updated player list
+        fetchLobby();
+      })
+      .on("broadcast", { event: "player_left" }, () => {
         // Refetch lobby to get updated player list
         fetchLobby();
       })
@@ -53,5 +68,6 @@ export function useLobby(code: string) {
     isLoading,
     error,
     refetch: fetchLobby,
+    leaveLobby,
   };
 }

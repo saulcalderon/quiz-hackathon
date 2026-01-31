@@ -66,15 +66,16 @@ export function useGameEngine(code: string, _userId?: string): GameState & GameA
   const fetchGameState = useCallback(async () => {
     try {
       setError(null);
-      const [lobbyData, questionData, leaderboardData] = await Promise.all([
-        api.get<Lobby>(`/lobbies/${code}`),
-        api.get<QuestionForClient | { finished: boolean }>(`/lobbies/${code}/question`),
-        api.get<LeaderboardEntry[]>(`/lobbies/${code}/leaderboard`),
+      const [lobbyRes, questionRes, leaderboardRes] = await Promise.all([
+        api.get<{ data: Lobby }>(`/lobbies/${code}`),
+        api.get<{ data: QuestionForClient | { finished: boolean } }>(`/lobbies/${code}/question`),
+        api.get<{ data: LeaderboardEntry[] }>(`/lobbies/${code}/leaderboard`),
       ]);
 
-      setLobby(lobbyData);
-      setLeaderboard(leaderboardData);
+      setLobby(lobbyRes.data);
+      setLeaderboard(leaderboardRes.data);
 
+      const questionData = questionRes.data;
       if ("finished" in questionData && questionData.finished) {
         setStatus("finished");
         router.push(`/results/${code}`);
@@ -210,8 +211,8 @@ export function useGameEngine(code: string, _userId?: string): GameState & GameA
 
   const advanceQuestion = useCallback(async () => {
     try {
-      const result = await api.post<{ finished?: boolean }>(`/lobbies/${code}/next`);
-      if (result.finished) {
+      const response = await api.post<{ data: { finished?: boolean } }>(`/lobbies/${code}/next`);
+      if (response.data.finished) {
         setStatus("finished");
         router.push(`/results/${code}`);
       } else {

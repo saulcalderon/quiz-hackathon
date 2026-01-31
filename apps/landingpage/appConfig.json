@@ -1,0 +1,17 @@
+{
+  "links": {
+    "login": {
+      "en": "https://app.skillstake.com/login",
+      "es": "https://app.skillstake.com/login"
+    },
+    "register": {
+      "en": "https://app.skillstake.com/register",
+      "es": "https://app.skillstake.com/register"
+    },
+    "terms": "/terms",
+    "rules": "/rules"
+  },
+  "external": {
+    "openInNewTab": false
+  }
+}
