@@ -1,40 +1,79 @@
 export default function Footer() {
   return (
     <footer
-      className="py-10 px-6"
       style={{
+        paddingTop: "2.5rem",
+        paddingBottom: "2.5rem",
+        paddingLeft: "1.5rem",
+        paddingRight: "1.5rem",
         borderTop: "1px solid rgba(255,255,255,0.1)",
       }}
     >
-      <div className="container mx-auto text-center">
+      <div 
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          textAlign: "center"
+        }}
+      >
         {/* Logo */}
-        <div className="flex items-center justify-center gap-2 mb-4">
+        <div 
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem",
+            marginBottom: "1rem"
+          }}
+        >
           <span
-            className="text-lg font-bold"
-            style={{ fontFamily: "var(--font-heading)" }}
+            style={{ 
+              fontFamily: "var(--font-heading)",
+              fontSize: "1.125rem",
+              fontWeight: 700
+            }}
           >
             Skill<span style={{ color: "var(--neon-green)" }}>Stake</span>
           </span>
         </div>
 
         {/* Links */}
-        <div className="flex justify-center gap-6 mb-6">
+        <div 
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "1.5rem",
+            marginBottom: "1.5rem"
+          }}
+        >
           {["Términos", "Reglas de la Comunidad"].map((link) => (
             <a
               key={link}
               href="#"
-              className="text-sm transition-colors duration-300 hover:text-white"
-              style={{ color: "var(--text-muted)" }}
+              style={{ 
+                color: "var(--text-muted)",
+                fontSize: "0.875rem",
+                transition: "color 0.3s"
+              }}
             >
               {link}
             </a>
           ))}
         </div>
 
-        {/* Disclaimer */}
+        {/* Disclaimer - CENTERED */}
         <p
-          className="text-xs max-w-lg mx-auto mb-4 leading-relaxed"
-          style={{ color: "var(--text-muted)", opacity: 0.6 }}
+          style={{ 
+            color: "var(--text-muted)", 
+            opacity: 0.6,
+            fontSize: "0.75rem",
+            maxWidth: "500px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginBottom: "1rem",
+            lineHeight: 1.6,
+            textAlign: "center"
+          }}
         >
           SkillStake es una plataforma de educación gamificada. Los
           &quot;Tokens&quot; son unidades de puntaje virtual y no representan
@@ -44,8 +83,12 @@ export default function Footer() {
 
         {/* Copyright */}
         <p
-          className="text-xs"
-          style={{ color: "var(--text-muted)", opacity: 0.5 }}
+          style={{ 
+            color: "var(--text-muted)", 
+            opacity: 0.5,
+            fontSize: "0.75rem",
+            textAlign: "center"
+          }}
         >
           © 2024 SkillStake Project.
         </p>

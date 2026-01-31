@@ -15,35 +15,83 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "glass shadow-lg shadow-black/20" : "bg-transparent"
-      }`}
       style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 50,
+        transition: "all 0.3s ease",
+        background: scrolled ? "rgba(10, 14, 23, 0.9)" : "transparent",
+        backdropFilter: scrolled ? "blur(10px)" : "none",
         borderBottom: scrolled ? "1px solid rgba(255,255,255,0.05)" : "none",
       }}
     >
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex justify-between items-center">
+      <div 
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "1rem 1.5rem"
+        }}
+      >
+        <div 
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
           {/* Logo */}
-          <div className="flex items-center gap-3 group cursor-pointer">
-            <div className="relative">
+          <div 
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              cursor: "pointer"
+            }}
+          >
+            {/* Diamond Icon - Fixed overflow */}
+            <div 
+              style={{
+                position: "relative",
+                width: "40px",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
               <div
-                className="w-7 h-7 rotate-45 transition-all duration-300 group-hover:scale-110"
                 style={{
+                  width: "24px",
+                  height: "24px",
+                  transform: "rotate(45deg)",
+                  transition: "all 0.3s ease",
                   background: "var(--bg-card)",
                   border: "2px solid var(--neon-green)",
                   boxShadow: "0 0 12px var(--neon-green-glow)",
                 }}
               >
                 <div
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 transition-all duration-300"
-                  style={{ background: "var(--electric-purple)" }}
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "8px",
+                    height: "8px",
+                    background: "var(--electric-purple)"
+                  }}
                 />
               </div>
             </div>
             <span
-              className="text-xl font-bold tracking-tight"
-              style={{ fontFamily: "var(--font-heading)" }}
+              style={{ 
+                fontFamily: "var(--font-heading)",
+                fontSize: "1.25rem",
+                fontWeight: 700,
+                letterSpacing: "-0.025em"
+              }}
             >
               Stake<span style={{ color: "var(--neon-green)" }}>Study</span>
             </span>
@@ -51,12 +99,20 @@ export default function Navbar() {
 
           {/* Connect Wallet Button */}
           <button
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 hover:shadow-lg"
             style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.625rem 1.25rem",
+              borderRadius: "8px",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              transition: "all 0.3s ease",
               background: "transparent",
               border: "1px solid var(--holo-cyan)",
               color: "var(--holo-cyan)",
               fontFamily: "var(--font-heading)",
+              cursor: "pointer"
             }}
           >
             <svg

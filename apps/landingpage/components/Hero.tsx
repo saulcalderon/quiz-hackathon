@@ -10,16 +10,34 @@ export default function Hero() {
   }, []);
 
   return (
-    <header className="relative pt-32 pb-16 px-6 text-center overflow-hidden">
-      {/* Background Effects (kept minimal/subtle as per original feel if desired, or just standard gradient text) */}
-      <div className="container mx-auto relative z-10">
-        
+    <header 
+      style={{
+        position: "relative",
+        paddingTop: "8rem",
+        paddingBottom: "4rem",
+        paddingLeft: "1.5rem",
+        paddingRight: "1.5rem",
+        textAlign: "center",
+        overflow: "hidden"
+      }}
+    >
+      <div 
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          position: "relative",
+          zIndex: 10
+        }}
+      >
         {/* Title */}
         <h1
-          className="text-4xl md:text-6xl font-bold mb-4"
           style={{
             fontFamily: "var(--font-heading)",
+            fontSize: "clamp(2.5rem, 5vw, 4rem)",
+            fontWeight: 700,
             lineHeight: 1.1,
+            marginBottom: "1rem",
+            textAlign: "center"
           }}
         >
           <span className="text-gradient">Tu conocimiento</span>
@@ -27,27 +45,45 @@ export default function Hero() {
           <span className="text-gradient">es tu divisa</span>
         </h1>
 
-        {/* Description */}
+        {/* Description - CENTERED */}
         <p
-          className="text-lg mb-8 max-w-xl mx-auto"
           style={{
             color: "var(--text-muted)",
+            fontSize: "1.1rem",
+            marginBottom: "2rem",
+            maxWidth: "600px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            textAlign: "center",
+            lineHeight: 1.6
           }}
         >
           Convierte tus PDFs de estudio en torneos gamificados. Acumula Skill Tokens, sube en el ranking y canjea recompensas. La IA es el árbitro.
         </p>
 
-        {/* Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+        {/* Buttons - CENTERED */}
+        <div 
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "1rem",
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: "3rem",
+            flexWrap: "wrap"
+          }}
+        >
           <a href="#" className="btn btn-primary">Crear Sala</a>
           <a href="#" className="btn btn-secondary">Cómo jugar</a>
         </div>
 
-        {/* Demo Card with Gradient Border */}
+        {/* Demo Card with Gradient Border - CENTERED */}
         <div
-          className="max-w-[380px] mx-auto text-left relative"
           style={{
-            marginTop: "3rem",
+            width: "100%",
+            maxWidth: "380px",
+            marginLeft: "auto",
+            marginRight: "auto",
             padding: "3px",
             borderRadius: "20px",
             background: "linear-gradient(135deg, var(--neon-green), var(--electric-purple), var(--holo-cyan))",
@@ -71,6 +107,7 @@ export default function Hero() {
               background: "var(--bg-card)",
               padding: "20px",
               borderRadius: "17px",
+              textAlign: "left"
             }}
           >
             {/* Card Header */}
@@ -90,7 +127,7 @@ export default function Hero() {
             </div>
 
             {/* Question */}
-            <h4 style={{ marginBottom: "10px", fontFamily: "var(--font-heading)", color: "white" }}>
+            <h4 style={{ marginBottom: "10px", fontFamily: "var(--font-heading)", color: "white", textAlign: "center" }}>
               ¿Cuál es el hueso más largo?
             </h4>
 
@@ -103,7 +140,8 @@ export default function Hero() {
                 borderRadius: "8px", 
                 fontSize: "0.9rem",
                 color: "var(--text-body)",
-                background: "transparent"
+                background: "transparent",
+                textAlign: "center"
               }}>
                 Tibia
               </div>
@@ -116,7 +154,8 @@ export default function Hero() {
                 borderRadius: "8px", 
                 fontSize: "0.9rem", 
                 color: "var(--neon-green)",
-                fontWeight: "500"
+                fontWeight: "500",
+                textAlign: "center"
               }}>
                 Fémur ✅
               </div>
