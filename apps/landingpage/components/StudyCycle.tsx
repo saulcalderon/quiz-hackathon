@@ -66,46 +66,61 @@ export default function StudyCycle() {
   }, []);
 
   return (
-    <section className="py-16 px-6">
-      <div className="container mx-auto">
+    <section style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
+      <div className="container mx-auto px-6">
+        {/* Section Title */}
         <h2 
-          className="text-center mb-12"
           style={{ 
             fontFamily: "var(--font-heading)", 
             fontSize: "2rem", 
-            color: "var(--text-heading)" 
+            color: "var(--text-heading)",
+            textAlign: "center",
+            marginBottom: "3rem"
           }}
         >
           El Ciclo de Estudio
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 3 Cards Grid - Wide Gutters */}
+        <div 
+          className="study-cycle-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "2rem", /* Wide gutters between cards */
+            maxWidth: "1100px",
+            margin: "0 auto"
+          }}
+        >
           {steps.map((step, index) => (
             <div
               key={step.number}
               ref={(el) => {cardsRef.current[index] = el}}
-              className="relative overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-lg"
               style={{
                 backgroundColor: "var(--bg-card)",
                 border: "1px solid rgba(255,255,255,0.08)",
                 padding: "2rem",
                 borderRadius: "16px",
+                position: "relative",
+                overflow: "hidden",
                 opacity: visibleCards[index] ? 1 : 0,
                 transform: visibleCards[index] ? "translateY(0)" : "translateY(20px)",
                 transition: `all 0.5s ease ${index * 0.15}s`,
               }}
+              className="hover:-translate-y-2 transition-transform duration-300"
             >
-              {/* Step Number - Background */}
+              {/* Step Number - Large Background Number */}
               <span
                 style={{
                   fontSize: "5rem",
                   fontWeight: 700,
-                  color: "rgba(57, 255, 20, 0.08)",
+                  color: "rgba(57, 255, 20, 0.1)",
                   position: "absolute",
-                  top: "-15px",
+                  top: "-10px",
                   right: "15px",
                   fontFamily: "var(--font-heading)",
                   lineHeight: 1,
+                  pointerEvents: "none"
                 }}
               >
                 {step.number}

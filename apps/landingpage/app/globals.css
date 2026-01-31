@@ -267,6 +267,16 @@ a {
 /* =========================================
    9. RESPONSIVE STYLES
    ========================================= */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .ticker {
+    animation-duration: 20s;
+  }
+}
+
 @media (min-width: 768px) {
   .hero h1 {
     font-size: 4rem;
@@ -274,6 +284,13 @@ a {
   
   .ticker {
     animation-duration: 40s;
+  }
+}
+
+/* Study Cycle Grid - Responsive */
+@media (max-width: 768px) {
+  .study-cycle-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 

@@ -2,16 +2,19 @@
 
 export default function AISection() {
   return (
-    <section className="py-12 px-6">
-      <div className="container mx-auto">
-        {/* Card with Gradient Border */}
+    /* CRITICAL: This section must be STRICTLY BELOW the feature cards with significant vertical gap */
+    <section style={{ paddingTop: "4rem", paddingBottom: "4rem" }}>
+      <div className="container mx-auto px-6">
+        {/* Single Wide Container for Fair Play Section */}
         <div
-          className="relative rounded-2xl overflow-hidden"
           style={{
-            padding: "2px",
+            padding: "3px",
+            borderRadius: "20px",
             background: "linear-gradient(135deg, var(--neon-green), var(--electric-purple), var(--holo-cyan))",
             backgroundSize: "200% 200%",
             animation: "gradientBorder 4s ease infinite",
+            maxWidth: "900px",
+            margin: "0 auto"
           }}
         >
           <style jsx>{`
@@ -23,28 +26,47 @@ export default function AISection() {
           `}</style>
           
           <div
-            className="relative rounded-2xl p-8 md:p-10 text-center overflow-hidden"
             style={{
               background: "var(--bg-card)",
+              borderRadius: "17px",
+              padding: "3rem 2rem",
+              textAlign: "center",
+              position: "relative",
+              overflow: "hidden"
             }}
           >
             {/* Background Glow */}
             <div
-              className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full pointer-events-none"
               style={{
+                position: "absolute",
+                top: 0,
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "300px",
+                height: "300px",
+                borderRadius: "50%",
                 background: "var(--electric-purple)",
                 filter: "blur(120px)",
                 opacity: 0.1,
+                pointerEvents: "none"
               }}
             />
 
             {/* AI Badge */}
             <span
-              className="inline-block px-4 py-1.5 rounded-full text-xs font-bold tracking-wider mb-5 relative z-10"
               style={{
+                display: "inline-block",
+                padding: "6px 16px",
+                borderRadius: "50px",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                letterSpacing: "1px",
+                marginBottom: "1.5rem",
                 background: "var(--neon-green)",
                 color: "var(--bg-main)",
                 fontFamily: "var(--font-heading)",
+                position: "relative",
+                zIndex: 10
               }}
             >
               POWERED BY AI
@@ -52,24 +74,46 @@ export default function AISection() {
 
             {/* Title */}
             <h2
-              className="text-2xl md:text-3xl font-bold mb-4 relative z-10"
-              style={{ fontFamily: "var(--font-heading)" }}
+              style={{ 
+                fontFamily: "var(--font-heading)",
+                fontSize: "1.75rem",
+                fontWeight: 700,
+                marginBottom: "1rem",
+                color: "var(--text-heading)",
+                position: "relative",
+                zIndex: 10
+              }}
             >
               Fair Play Garantizado
             </h2>
 
             {/* Description */}
             <p
-              className="text-sm md:text-base max-w-xl mx-auto mb-6 relative z-10"
-              style={{ color: "var(--text-muted)" }}
+              style={{ 
+                color: "var(--text-muted)",
+                fontSize: "0.95rem",
+                maxWidth: "500px",
+                margin: "0 auto 1.5rem",
+                lineHeight: 1.6,
+                position: "relative",
+                zIndex: 10
+              }}
             >
               Adiós a la subjetividad. Nuestra Inteligencia Artificial valida las
               respuestas en tiempo real. Nadie tiene ventaja, solo gana el que
               realmente estudió.
             </p>
 
-            {/* Feature Icons */}
-            <div className="flex justify-center gap-8 relative z-10">
+            {/* Feature Badges/Icons */}
+            <div 
+              style={{ 
+                display: "flex", 
+                justifyContent: "center", 
+                gap: "2rem",
+                position: "relative",
+                zIndex: 10
+              }}
+            >
               {[
                 { icon: "⚖️", label: "Imparcial" },
                 { icon: "🤖", label: "Inteligente" },
@@ -77,9 +121,14 @@ export default function AISection() {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center gap-2"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "0.5rem"
+                  }}
                 >
-                  <span className="text-3xl">{item.icon}</span>
+                  <span style={{ fontSize: "2rem" }}>{item.icon}</span>
                 </div>
               ))}
             </div>
