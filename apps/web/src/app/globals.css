@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --primary: #ffff00;
+  --secondary: #a020f0;
+  --accent: #00ff00;
+  --muted: #f5f5f5;
+  --border: #000000;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --font-heading: var(--font-staatliches);
+  --font-body: var(--font-inter);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+}
+
+/* Neubrutalist utilities - using regular CSS */
+.border-brutal {
+  border-width: 4px;
+  border-color: var(--border);
+  border-style: solid;
+}
+
+.shadow-brutal {
+  box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.shadow-brutal-sm {
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.shadow-brutal-hover {
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  transform: translate(4px, 4px);
+}
+
+/* Button sink effect on active - using regular CSS */
+.btn-brutal {
+  border-width: 4px;
+  border-color: var(--border);
+  border-style: solid;
+  box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+  transition: all 100ms;
+}
+
+.btn-brutal:hover {
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  transform: translate(2px, 2px);
+}
+
+.btn-brutal:active {
+  box-shadow: none;
+  transform: translate(8px, 8px);
+}
+
+/* Card styles */
+.card-brutal {
+  border-width: 4px;
+  border-color: var(--border);
+  border-style: solid;
+  box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+  background: var(--background);
+}
+
+/* Input styles */
+.input-brutal {
+  border-width: 4px;
+  border-color: var(--border);
+  border-style: solid;
+  background: var(--background);
+  padding: 0.75rem 1rem;
+  color: var(--foreground);
+  outline: none;
+}
+
+.input-brutal:focus {
+  box-shadow: 0 0 0 4px var(--primary);
+}
+
+/* Headings font */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading), sans-serif;
+}
