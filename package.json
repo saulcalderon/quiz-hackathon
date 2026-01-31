@@ -1,0 +1,24 @@
+{
+  "name": "quiz-hackathon",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "turbo:dev": "turbo run dev",
+    "turbo:build": "turbo run build",
+    "turbo:clean": "turbo run clean && rm -rf node_modules",
+    "turbo:format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\" --ignore-path .gitignore",
+    "turbo:check-types": "turbo run check-types"
+  },
+  "devDependencies": {
+    "minimatch": "^10.1.1",
+    "prettier": "^3.1.1",
+    "turbo": "^2.5.8"
+  },
+  "packageManager": "yarn@4.10.3",
+  "engines": {
+    "node": ">=20"
+  }
+}

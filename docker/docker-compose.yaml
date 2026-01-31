@@ -1,0 +1,16 @@
+services:
+  db:
+    container_name: quiz-hackathon-db
+    image: postgres:16.8
+    restart: unless-stopped
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: quiz-hackathon
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
