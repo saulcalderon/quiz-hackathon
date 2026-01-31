@@ -72,9 +72,9 @@ export class PaymentsService {
   async confirmPayment(userId: string, paymentIntentId: string): Promise<{ success: boolean; credits: number; newBalance: number }> {
     const stripe = this.getStripe();
 
-    // Check if already processed
+    // Check if already processed in memory (prevents double-calls in same session)
     if (this.processedPayments.has(paymentIntentId)) {
-      this.logger.log(`Payment ${paymentIntentId} already processed, skipping`);
+      this.logger.log(`Payment ${paymentIntentId} already processed in this session, skipping`);
       const user = await this.prisma.user.findUnique({ where: { id: userId } });
       return { success: true, credits: 0, newBalance: user?.balance ?? 0 };
     }
@@ -98,30 +98,11 @@ export class PaymentsService {
       throw new BadRequestException('Invalid credits in payment metadata');
     }
 
-    // Check if this payment was already credited in database
-    const existingTransaction = await this.prisma.transaction.findFirst({
-      where: {
-        userId,
-        amount: credits,
-        type: TransactionType.TOPUP,
-        // Check if created within the last minute (same payment)
-        createdAt: {
-          gte: new Date(Date.now() - 60000),
-        },
-      },
-    });
-
-    if (existingTransaction) {
-      this.logger.log(`Transaction for payment ${paymentIntentId} already exists, returning current balance`);
-      const user = await this.prisma.user.findUnique({ where: { id: userId } });
-      return { success: true, credits: 0, newBalance: user?.balance ?? 0 };
-    }
+    // Mark as processed BEFORE crediting to prevent race conditions
+    this.processedPayments.add(paymentIntentId);
 
     // Credit the user
     const updatedUser = await this.creditUser(userId, credits, paymentIntentId);
-
-    // Mark as processed
-    this.processedPayments.add(paymentIntentId);
 
     this.logger.log(`Payment ${paymentIntentId} confirmed: ${credits} credits added to user ${userId}`);
 
