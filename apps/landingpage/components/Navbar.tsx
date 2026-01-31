@@ -63,7 +63,7 @@ export default function Navbar() {
         >
           SS
         </div>
-        SKILLSTAKE
+        STAKESTUDY
       </div>
 
       {/* Language Switch */}

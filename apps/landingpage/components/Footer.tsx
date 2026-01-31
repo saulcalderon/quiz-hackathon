@@ -41,7 +41,7 @@ export default function Footer() {
           SS
         </div>
         <span style={{ fontWeight: 900, fontSize: "1.1rem" }}>
-          SKILLSTAKE
+          STAKESTUDY
         </span>
       </div>
 
@@ -93,7 +93,7 @@ export default function Footer() {
 
       {/* Copyright */}
       <p style={{ color: "var(--gray)", fontSize: "0.75rem" }}>
-        © 2024 SKILLSTAKE PROJECT
+        © 2024 STAKESTUDY PROJECT
       </p>
     </footer>
   );

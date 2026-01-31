@@ -45,7 +45,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Footer
     "footer.terms": "TERMS",
     "footer.rules": "RULES",
-    "footer.disclaimer": "SkillStake is a gamified education platform. \"Tokens\" are virtual score units. The goal is to encourage consistent study habits.",
+    "footer.disclaimer": "StakeStudy is a gamified education platform. \"Tokens\" are virtual score units. The goal is to encourage consistent study habits.",
   },
   es: {
     // Hero
@@ -80,7 +80,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Footer
     "footer.terms": "TÉRMINOS",
     "footer.rules": "REGLAS",
-    "footer.disclaimer": "SkillStake es una plataforma de educación gamificada. Los \"Tokens\" son unidades de puntaje virtual. El objetivo es incentivar el hábito de estudio.",
+    "footer.disclaimer": "StakeStudy es una plataforma de educación gamificada. Los \"Tokens\" son unidades de puntaje virtual. El objetivo es incentivar el hábito de estudio.",
   },
 };
 

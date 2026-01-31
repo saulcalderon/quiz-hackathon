@@ -1,12 +1,12 @@
 {
   "links": {
     "login": {
-      "en": "https://app.skillstake.com/login",
-      "es": "https://app.skillstake.com/login"
+      "en": "https://app.stakestudy.com/login",
+      "es": "https://app.stakestudy.com/login"
     },
     "register": {
-      "en": "https://app.skillstake.com/register",
-      "es": "https://app.skillstake.com/register"
+      "en": "https://app.stakestudy.com/register",
+      "es": "https://app.stakestudy.com/register"
     },
     "terms": "/terms",
     "rules": "/rules"

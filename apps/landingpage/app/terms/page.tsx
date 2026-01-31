@@ -27,11 +27,11 @@ const content: Record<Language, {
     sections: [
       {
         title: "1. ACCEPTANCE OF TERMS",
-        content: "By accessing and using SkillStake, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by these terms, please do not use this service."
+        content: "By accessing and using StakeStudy, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by these terms, please do not use this service."
       },
       {
         title: "2. DESCRIPTION OF SERVICE",
-        content: "SkillStake is a gamified education platform that allows users to:",
+        content: "StakeStudy is a gamified education platform that allows users to:",
         list: [
           "Upload study materials for AI-generated quizzes",
           "Compete in knowledge-based tournaments",
@@ -41,7 +41,7 @@ const content: Record<Language, {
       },
       {
         title: "3. VIRTUAL TOKENS",
-        content: "Important: SkillStake tokens are virtual score units used exclusively within the platform for educational gamification purposes. They:",
+        content: "Important: StakeStudy tokens are virtual score units used exclusively within the platform for educational gamification purposes. They:",
         list: [
           "Have no real-world monetary value",
           "Cannot be exchanged for fiat currency",
@@ -75,7 +75,7 @@ const content: Record<Language, {
       },
       {
         title: "7. MODIFICATIONS",
-        content: "SkillStake reserves the right to modify these terms at any time. Users will be notified of significant changes via email or in-app notification."
+        content: "StakeStudy reserves the right to modify these terms at any time. Users will be notified of significant changes via email or in-app notification."
       }
     ]
   },
@@ -86,11 +86,11 @@ const content: Record<Language, {
     sections: [
       {
         title: "1. ACEPTACIÓN DE TÉRMINOS",
-        content: "Al acceder y usar SkillStake, aceptas y te comprometes a cumplir con los términos y disposiciones de este acuerdo. Si no estás de acuerdo con estos términos, por favor no uses este servicio."
+        content: "Al acceder y usar StakeStudy, aceptas y te comprometes a cumplir con los términos y disposiciones de este acuerdo. Si no estás de acuerdo con estos términos, por favor no uses este servicio."
       },
       {
         title: "2. DESCRIPCIÓN DEL SERVICIO",
-        content: "SkillStake es una plataforma de educación gamificada que permite a los usuarios:",
+        content: "StakeStudy es una plataforma de educación gamificada que permite a los usuarios:",
         list: [
           "Subir materiales de estudio para quizzes generados por IA",
           "Competir en torneos basados en conocimiento",
@@ -100,7 +100,7 @@ const content: Record<Language, {
       },
       {
         title: "3. TOKENS VIRTUALES",
-        content: "Importante: Los tokens de SkillStake son unidades de puntaje virtual usadas exclusivamente dentro de la plataforma para propósitos de gamificación educativa. Ellos:",
+        content: "Importante: Los tokens de StakeStudy son unidades de puntaje virtual usadas exclusivamente dentro de la plataforma para propósitos de gamificación educativa. Ellos:",
         list: [
           "No tienen valor monetario real",
           "No pueden ser intercambiados por dinero fiduciario",
@@ -134,7 +134,7 @@ const content: Record<Language, {
       },
       {
         title: "7. MODIFICACIONES",
-        content: "SkillStake se reserva el derecho de modificar estos términos en cualquier momento. Los usuarios serán notificados de cambios significativos por correo electrónico o notificación en la app."
+        content: "StakeStudy se reserva el derecho de modificar estos términos en cualquier momento. Los usuarios serán notificados de cambios significativos por correo electrónico o notificación en la app."
       }
     ]
   }
@@ -194,7 +194,7 @@ export default function TermsPage() {
           >
             SS
           </div>
-          SKILLSTAKE
+          STAKESTUDY
         </Link>
 
         <div style={{ display: "flex", gap: "15px", alignItems: "center" }}>
@@ -319,7 +319,7 @@ export default function TermsPage() {
         }}
       >
         <p style={{ color: "var(--gray)", fontSize: "0.75rem" }}>
-          © 2024 SKILLSTAKE PROJECT
+          © 2024 STAKESTUDY PROJECT
         </p>
       </footer>
     </div>
