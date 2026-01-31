@@ -7,6 +7,7 @@ async function bootstrap() {
   const startTime = Date.now();
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'log'],
+    rawBody: true, // Necesario para webhooks de Stripe
   });
 
   app.enableCors();
