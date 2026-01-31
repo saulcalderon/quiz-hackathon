@@ -10,9 +10,10 @@ import { LedgerModule } from './modules/ledger/ledger.module';
 import { AiModule } from './modules/ai/ai.module';
 import { LobbyModule } from './modules/lobby/lobby.module';
 import { QuizModule } from './modules/quiz/quiz.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 
 @Module({
-  imports: [PrismaModule, AuthModule, LedgerModule, AiModule, LobbyModule, QuizModule],
+  imports: [PrismaModule, AuthModule, LedgerModule, AiModule, LobbyModule, QuizModule, PaymentsModule],
   controllers: [AppController],
   providers: [
     AppService,

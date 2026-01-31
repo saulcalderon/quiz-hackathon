@@ -19,6 +19,8 @@ interface WalletContextType {
   error: string | null;
   refetch: () => Promise<void>;
   topUp: (amount: number) => Promise<void>;
+  /** Increments each time a successful payment is made - useful for triggering transaction refreshes */
+  paymentCount: number;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
@@ -33,6 +35,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
   const [xp, setXp] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [paymentCount, setPaymentCount] = useState(0);
 
   const fetchBalance = useCallback(async () => {
     if (!user || !session) {
@@ -48,6 +51,8 @@ export function WalletProvider({ children }: WalletProviderProps) {
       const data = await api.get<User>("/users/me");
       setBalance(data.balance);
       setXp(data.xp);
+      // Increment payment count to trigger transaction refresh in profile page
+      setPaymentCount((prev) => prev + 1);
     } catch (err) {
       console.error("Failed to fetch balance:", err);
       setError("Failed to load balance");
@@ -65,6 +70,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
         const data = await api.post<User>("/users/me/topup", { amount });
         setBalance(data.balance);
         setXp(data.xp);
+        setPaymentCount((prev) => prev + 1);
       } catch (err) {
         console.error("Failed to top up:", err);
         setError("Failed to top up");
@@ -87,6 +93,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
         error,
         refetch: fetchBalance,
         topUp,
+        paymentCount,
       }}
     >
       {children}

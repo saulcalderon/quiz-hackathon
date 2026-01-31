@@ -8,33 +8,34 @@ import { useAuth } from "@/contexts/auth-context";
 import { useWallet } from "@/contexts/wallet-context";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
+import { StripeCheckoutModal } from "@/components/wallet/stripe-checkout-modal";
 import { formatCredits } from "@/lib/utils";
+
+const topUpOptions = [
+  { amount: 100, price: "$1", priceInCents: 100 },
+  { amount: 500, price: "$5", priceInCents: 500 },
+  { amount: 1000, price: "$10", priceInCents: 1000 },
+  { amount: 2500, price: "$25", priceInCents: 2500 },
+];
 
 export function WalletHeader() {
   const { signOut } = useAuth();
-  const { balance, xp, isLoading, topUp } = useWallet();
+  const { balance, xp, isLoading, refetch } = useWallet();
   const [showTopUpModal, setShowTopUpModal] = useState(false);
-  const [isTopingUp, setIsTopingUp] = useState(false);
+  const [showStripeModal, setShowStripeModal] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState<typeof topUpOptions[0] | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleTopUp = async (amount: number) => {
-    setIsTopingUp(true);
-    try {
-      await topUp(amount);
-      setShowTopUpModal(false);
-    } catch (error) {
-      console.error("Top up failed:", error);
-    } finally {
-      setIsTopingUp(false);
-    }
+  const handleSelectPackage = (option: typeof topUpOptions[0]) => {
+    setSelectedPackage(option);
+    setShowTopUpModal(false);
+    setShowStripeModal(true);
   };
 
-  const topUpOptions = [
-    { amount: 100, price: "$1" },
-    { amount: 500, price: "$5" },
-    { amount: 1000, price: "$10" },
-    { amount: 2500, price: "$25" },
-  ];
+  const handlePaymentSuccess = async () => {
+    // Refetch to update balance after successful payment
+    await refetch();
+  };
 
   return (
     <>
@@ -169,11 +170,11 @@ export function WalletHeader() {
         </AnimatePresence>
       </header>
 
-      {/* Top Up Modal */}
+      {/* Top Up Modal - Package Selection */}
       <Modal
         isOpen={showTopUpModal}
         onClose={() => setShowTopUpModal(false)}
-        title="Top Up Credits"
+        title="Buy Credits"
         size="sm"
       >
         <div className="space-y-4">
@@ -186,8 +187,7 @@ export function WalletHeader() {
               <Button
                 key={option.amount}
                 variant="outline"
-                onClick={() => handleTopUp(option.amount)}
-                disabled={isTopingUp}
+                onClick={() => handleSelectPackage(option)}
                 className="flex flex-col items-center py-4"
               >
                 <span className="font-heading text-2xl">
@@ -199,11 +199,24 @@ export function WalletHeader() {
           </div>
 
           <p className="text-xs text-gray-500 text-center">
-            This is a demo. In production, this would connect to a payment
-            processor.
+            Secure payments powered by Stripe.
           </p>
         </div>
       </Modal>
+
+      {/* Stripe Checkout Modal */}
+      {selectedPackage && (
+        <StripeCheckoutModal
+          isOpen={showStripeModal}
+          onClose={() => {
+            setShowStripeModal(false);
+            setSelectedPackage(null);
+          }}
+          credits={selectedPackage.amount}
+          priceLabel={selectedPackage.price}
+          onSuccess={handlePaymentSuccess}
+        />
+      )}
     </>
   );
 }

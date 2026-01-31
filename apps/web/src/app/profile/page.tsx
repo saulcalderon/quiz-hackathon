@@ -1,41 +1,58 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Coins, Star, User, Calendar, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { Coins, Star, User, Calendar, TrendingUp, TrendingDown, Minus, RefreshCw } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { useWallet } from "@/contexts/wallet-context";
 import { api } from "@/lib/api";
 import { Card, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { formatCredits } from "@/lib/utils";
 import { Transaction } from "@/types";
 
 export default function ProfilePage() {
   const { user } = useAuth();
-  const { balance, xp, refetch } = useWallet();
+  const { balance, xp, isLoading: isWalletLoading, refetch: refetchWallet, paymentCount } = useWallet();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingTransactions, setIsLoadingTransactions] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
+  const fetchTransactions = useCallback(async () => {
+    if (!user) return;
+    
+    try {
+      setIsLoadingTransactions(true);
+      const data = await api.get<Transaction[]>("/users/me/transactions");
+      // Ensure it's always an array
+      setTransactions(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Failed to fetch transactions:", error);
+      setTransactions([]);
+    } finally {
+      setIsLoadingTransactions(false);
+    }
+  }, [user]);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    await Promise.all([refetchWallet(), fetchTransactions()]);
+    setIsRefreshing(false);
+  };
+
+  // Fetch transactions on mount and when user changes
   useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        setIsLoading(true);
-        const data = await api.get<Transaction[]>("/users/me/transactions");
-        // Asegurarnos de que siempre sea un array
-        setTransactions(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error("Failed to fetch transactions:", error);
-        setTransactions([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     if (user) {
       fetchTransactions();
-      refetch();
     }
-  }, [user, refetch]);
+  }, [user, fetchTransactions]);
+
+  // Refresh transactions when a new payment is made
+  useEffect(() => {
+    if (user && paymentCount > 0) {
+      fetchTransactions();
+    }
+  }, [paymentCount, user, fetchTransactions]);
 
   const getTransactionIcon = (type: Transaction["type"]) => {
     switch (type) {
@@ -55,13 +72,13 @@ export default function ProfilePage() {
   const getTransactionLabel = (type: Transaction["type"]) => {
     switch (type) {
       case "TOPUP":
-        return "Recarga";
+        return "Top Up";
       case "WIN":
-        return "Victoria";
+        return "Win";
       case "ENTRY":
-        return "Entrada a juego";
+        return "Game Entry";
       case "HOUSE_FEE":
-        return "Comisión";
+        return "House Fee";
       default:
         return type;
     }
@@ -69,7 +86,7 @@ export default function ProfilePage() {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat("es-ES", {
+    return new Intl.DateTimeFormat("en-US", {
       day: "2-digit",
       month: "short",
       year: "numeric",
@@ -81,7 +98,7 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <p className="text-center text-gray-600">Por favor inicia sesión para ver tu perfil</p>
+        <p className="text-center text-gray-600">Please sign in to view your profile</p>
       </div>
     );
   }
@@ -92,10 +109,22 @@ export default function ProfilePage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-8 flex items-start justify-between"
       >
-        <h1 className="font-heading text-4xl md:text-5xl uppercase mb-2">Mi Perfil</h1>
-        <p className="text-gray-600">Gestiona tus tokens y revisa tu historial</p>
+        <div>
+          <h1 className="font-heading text-4xl md:text-5xl uppercase mb-2">My Profile</h1>
+          <p className="text-gray-600">Manage your tokens and view your history</p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleRefresh}
+          disabled={isRefreshing}
+          className="flex items-center gap-2"
+        >
+          <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""}`} />
+          Refresh
+        </Button>
       </motion.div>
 
       <div className="grid md:grid-cols-2 gap-6">
@@ -110,7 +139,7 @@ export default function ProfilePage() {
             <Card>
               <CardTitle className="flex items-center gap-2 mb-4">
                 <User className="w-5 h-5" />
-                Información del Usuario
+                User Information
               </CardTitle>
               <CardContent className="space-y-4">
                 <div>
@@ -118,15 +147,15 @@ export default function ProfilePage() {
                   <p className="font-heading text-lg">{user.email}</p>
                 </div>
                 <div>
-                  <label className="text-xs text-gray-500 uppercase">ID de Usuario</label>
+                  <label className="text-xs text-gray-500 uppercase">User ID</label>
                   <p className="font-mono text-sm text-gray-600 break-all">{user.id}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4 text-gray-500" />
                   <div>
-                    <label className="text-xs text-gray-500 uppercase">Miembro desde</label>
+                    <label className="text-xs text-gray-500 uppercase">Member Since</label>
                     <p className="text-sm">
-                      {new Date(user.created_at).toLocaleDateString("es-ES", {
+                      {new Date(user.created_at).toLocaleDateString("en-US", {
                         month: "long",
                         year: "numeric",
                       })}
@@ -146,7 +175,7 @@ export default function ProfilePage() {
             <Card className="bg-primary">
               <CardTitle className="flex items-center gap-2 mb-4">
                 <Coins className="w-5 h-5" />
-                Tokens Disponibles
+                Available Tokens
               </CardTitle>
               <CardContent>
                 <div className="flex items-center gap-3 mb-4">
@@ -155,17 +184,21 @@ export default function ProfilePage() {
                   </div>
                   <div>
                     <label className="text-xs text-gray-600 uppercase">Balance</label>
-                    <p className="font-heading text-3xl">{formatCredits(balance)}</p>
-                    <p className="text-xs text-gray-600">Tokens para apostar</p>
+                    <p className="font-heading text-3xl">
+                      {isWalletLoading ? "..." : formatCredits(balance)}
+                    </p>
+                    <p className="text-xs text-gray-600">Tokens available to bet</p>
                   </div>
                 </div>
                 <div className="pt-4 border-t-4 border-black">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Star className="w-4 h-4" />
-                      <span className="text-sm">Experiencia (XP)</span>
+                      <span className="text-sm">Experience (XP)</span>
                     </div>
-                    <span className="font-heading text-xl">{formatCredits(xp)}</span>
+                    <span className="font-heading text-xl">
+                      {isWalletLoading ? "..." : formatCredits(xp)}
+                    </span>
                   </div>
                 </div>
               </CardContent>
@@ -180,15 +213,15 @@ export default function ProfilePage() {
           transition={{ delay: 0.15 }}
         >
           <Card>
-            <CardTitle className="mb-4">Historial de Transacciones</CardTitle>
+            <CardTitle className="mb-4">Transaction History</CardTitle>
             <CardContent>
-              {isLoading ? (
+              {isLoadingTransactions ? (
                 <div className="text-center py-8">
-                  <p className="text-gray-500">Cargando transacciones...</p>
+                  <p className="text-gray-500">Loading transactions...</p>
                 </div>
               ) : transactions.length === 0 ? (
                 <div className="text-center py-8">
-                  <p className="text-gray-500">No hay transacciones aún</p>
+                  <p className="text-gray-500">No transactions yet</p>
                 </div>
               ) : (
                 <div className="space-y-3 max-h-[600px] overflow-y-auto">
@@ -206,11 +239,13 @@ export default function ProfilePage() {
                           <p className="text-xs text-gray-500">
                             {formatDate(transaction.createdAt)}
                           </p>
-                          {transaction.lobby && (
-                            <p className="text-xs text-gray-400">
-                              Lobby: {transaction.lobby.code}
-                            </p>
-                          )}
+                          <p className="text-xs text-gray-400">
+                            {transaction.lobby 
+                              ? `Lobby: ${transaction.lobby.code}` 
+                              : transaction.type === "TOPUP" 
+                                ? "Stripe Payment" 
+                                : ""}
+                          </p>
                         </div>
                       </div>
                       <div className="text-right">
