@@ -4,7 +4,6 @@ import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Home, Share2 } from "lucide-react";
-import { useAuth } from "@/contexts/auth-context";
 import { useWallet } from "@/contexts/wallet-context";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
@@ -23,8 +22,7 @@ export default function ResultsPage({
 }) {
   const { code } = use(params);
   const router = useRouter();
-  const { user } = useAuth();
-  const { refetch: refetchWallet } = useWallet();
+  const { userId, refetch: refetchWallet } = useWallet();
 
   const [lobby, setLobby] = useState<Lobby | null>(null);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
@@ -41,6 +39,16 @@ export default function ResultsPage({
 
         setLobby(lobbyRes.data);
         setLeaderboard(leaderboardRes.data);
+
+        // Redirect if game not finished
+        if (lobbyRes.data.status === "WAITING") {
+          router.push(`/lobby/${code}`);
+          return;
+        }
+        if (lobbyRes.data.status === "ACTIVE") {
+          router.push(`/arena/${code}`);
+          return;
+        }
 
         // Refresh wallet balance
         await refetchWallet();
@@ -89,8 +97,8 @@ export default function ResultsPage({
   }
 
   const winnerId = leaderboard[0]?.userId;
-  const isWinner = winnerId === user?.id;
-  const userRank = leaderboard.findIndex((e) => e.userId === user?.id) + 1;
+  const isWinner = winnerId === userId;
+  const userRank = leaderboard.findIndex((e) => e.userId === userId) + 1;
   const payout = Math.floor(lobby.totalPot * 0.9);
 
   return (
@@ -106,7 +114,7 @@ export default function ResultsPage({
       >
         <Podium
           leaderboard={leaderboard}
-          currentUserId={user?.id}
+          currentUserId={userId}
           payout={payout}
         />
       </motion.div>
@@ -145,7 +153,7 @@ export default function ResultsPage({
         transition={{ delay: 1 }}
         className="mb-8"
       >
-        <FinalLeaderboard leaderboard={leaderboard} currentUserId={user?.id} />
+        <FinalLeaderboard leaderboard={leaderboard} currentUserId={userId} />
       </motion.div>
 
       {/* Actions */}

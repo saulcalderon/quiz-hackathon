@@ -249,7 +249,7 @@ export class LobbyService {
       const currentQ = questions[currentIndex];
       const leaderboard = lobby.participations
         .map((p) => ({
-          oduserId: p.userId,
+          userId: p.userId,
           score: p.score,
           speedXp: p.speedXp,
         }))

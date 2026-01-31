@@ -38,7 +38,7 @@ export function LiveScoreboard({
 
             return (
               <motion.div
-                key={entry.userId}
+                key={entry.userId || `player-${index}`}
                 layout
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}

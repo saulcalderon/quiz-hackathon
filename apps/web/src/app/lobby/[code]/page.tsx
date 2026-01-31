@@ -68,6 +68,18 @@ export default function LobbyPage({
     );
   }
 
+  // Redirect if game has started
+  if (lobby.status === "ACTIVE") {
+    router.push(`/arena/${code.toUpperCase()}`);
+    return null;
+  }
+
+  // Redirect if game is finished
+  if (lobby.status === "FINISHED") {
+    router.push(`/results/${code.toUpperCase()}`);
+    return null;
+  }
+
   const isHost = lobby.hostId === userId;
 
   return (
