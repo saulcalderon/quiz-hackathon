@@ -2,7 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 import { GoogleGenerativeAI, SchemaType, type ResponseSchema } from '@google/generative-ai';
 import { Question, QuestionSet } from '../../common/types/question.types';
 
-const QUESTION_COUNT = 10;
+const QUESTION_COUNT = 5;
+const MAX_NOTES_LENGTH = 1500; // Limit notes to reduce token usage
 
 const questionSchema: ResponseSchema = {
   type: SchemaType.ARRAY,
@@ -56,7 +57,7 @@ export class AiService {
 
   async generateQuestions(topic: string, notes?: string): Promise<QuestionSet> {
     const model = this.getGenAI().getGenerativeModel({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.0-flash',
       generationConfig: {
         responseMimeType: 'application/json',
         responseSchema: questionSchema,
@@ -67,49 +68,48 @@ export class AiService {
 
     this.logger.log(`Generating questions for topic: ${topic}`);
 
-    const result = await model.generateContent(prompt);
-    const response = result.response;
-    const text = response.text();
+    try {
+      const result = await model.generateContent(prompt);
+      const response = result.response;
+      const text = response.text();
 
-    const questions = JSON.parse(text) as Question[];
+      const questions = JSON.parse(text) as Question[];
 
-    // Validate the questions
-    this.validateQuestions(questions);
+      // Validate the questions
+      this.validateQuestions(questions);
 
-    this.logger.log(`Generated ${questions.length} questions`);
+      this.logger.log(`Generated ${questions.length} questions`);
 
-    return questions;
+      return questions;
+    } catch (error: unknown) {
+      const err = error as { status?: number; message?: string };
+      if (err.status === 429) {
+        this.logger.error('Gemini API rate limit exceeded');
+        throw new Error('AI service is temporarily unavailable. Please try again in a few minutes.');
+      }
+      this.logger.error(`Failed to generate questions: ${err.message}`);
+      throw new Error('Failed to generate questions. Please try again.');
+    }
   }
 
   private buildPrompt(topic: string, notes?: string): string {
-    let prompt = `Generate exactly ${QUESTION_COUNT} multiple-choice trivia questions about: "${topic}"
-
-Requirements:
-- Each question must have exactly 4 answer options
-- Only one option should be correct
-- correctIndex must be 0, 1, 2, or 3
-- Mix difficulties: 3 easy, 4 medium, 3 hard
-- Questions should be challenging but fair
-- Avoid trick questions
-- Make distractors (wrong answers) plausible`;
+    let prompt = `Generate ${QUESTION_COUNT} quiz questions about "${topic}".
+Each question: 4 options, 1 correct (correctIndex 0-3), difficulty (easy/medium/hard).`;
 
     if (notes) {
-      prompt += `
-
-Use these study notes as the primary source for questions:
----
-${notes}
----
-
-Generate questions that test understanding of the key concepts from these notes.`;
+      // Truncate notes to reduce token usage
+      const truncatedNotes = notes.length > MAX_NOTES_LENGTH 
+        ? notes.slice(0, MAX_NOTES_LENGTH) + '...' 
+        : notes;
+      prompt += `\n\nSource:\n${truncatedNotes}`;
     }
 
     return prompt;
   }
 
   private validateQuestions(questions: Question[]): void {
-    if (questions.length !== QUESTION_COUNT) {
-      throw new Error(`Expected ${QUESTION_COUNT} questions, got ${questions.length}`);
+    if (questions.length < 1 || questions.length > QUESTION_COUNT + 2) {
+      throw new Error(`Expected ~${QUESTION_COUNT} questions, got ${questions.length}`);
     }
 
     for (let i = 0; i < questions.length; i++) {

@@ -4,7 +4,7 @@ import { use, useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Zap, Trophy } from "lucide-react";
-import { useAuth } from "@/contexts/auth-context";
+import { useWallet } from "@/contexts/wallet-context";
 import { createClient } from "@/lib/supabase/client";
 import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
@@ -32,7 +32,7 @@ export default function ArenaPage({
 }) {
   const { code } = use(params);
   const router = useRouter();
-  const { user } = useAuth();
+  const { userId } = useWallet();
 
   // Game state
   const [lobby, setLobby] = useState<Lobby | null>(null);
@@ -60,22 +60,26 @@ export default function ArenaPage({
   const answerStartTime = useRef<number>(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const isHost = lobby?.hostId === user?.id;
+  const isHost = lobby?.hostId === userId;
 
   // Fetch initial data
   const fetchGameState = useCallback(async () => {
     try {
-      const [lobbyData, questionData, leaderboardData] = await Promise.all([
-        api.get<Lobby>(`/lobbies/${code}`),
-        api.get<QuestionForClient | { finished: boolean }>(
+      const [lobbyRes, questionRes, leaderboardRes, statusRes] = await Promise.all([
+        api.get<{ data: Lobby }>(`/lobbies/${code}`),
+        api.get<{ data: QuestionForClient | { finished: boolean } }>(
           `/lobbies/${code}/question`
         ),
-        api.get<LeaderboardEntry[]>(`/lobbies/${code}/leaderboard`),
+        api.get<{ data: LeaderboardEntry[] }>(`/lobbies/${code}/leaderboard`),
+        api.get<{ data: { hasAnsweredCurrent: boolean; doubledQuestion: number | null } }>(
+          `/lobbies/${code}/my-status`
+        ),
       ]);
 
-      setLobby(lobbyData);
-      setLeaderboard(leaderboardData);
+      setLobby(lobbyRes.data);
+      setLeaderboard(leaderboardRes.data);
 
+      const questionData = questionRes.data;
       if ("finished" in questionData && questionData.finished) {
         router.push(`/results/${code}`);
         return;
@@ -83,12 +87,24 @@ export default function ArenaPage({
 
       if ("text" in questionData) {
         setCurrentQuestion(questionData);
-        answerStartTime.current = Date.now();
-        setTimeRemaining(QUESTION_TIME);
+        
+        // Check if user already answered this question
+        const { hasAnsweredCurrent, doubledQuestion } = statusRes.data;
+        if (hasAnsweredCurrent) {
+          setHasAnswered(true);
+          setTimeRemaining(0);
+        } else {
+          answerStartTime.current = Date.now();
+          setTimeRemaining(QUESTION_TIME);
+          setHasAnswered(false);
+        }
+        
         setSelectedOption(null);
         setCorrectOption(null);
-        setHasAnswered(false);
-        setIsDoubledQuestion(false);
+        setIsDoubledQuestion(doubledQuestion === questionData.index);
+        if (doubledQuestion !== null) {
+          setHasUsedDouble(true);
+        }
       }
     } catch (error) {
       console.error("Failed to fetch game state:", error);
@@ -286,8 +302,36 @@ export default function ArenaPage({
             onSelect={handleSelectOption}
           />
 
-          {/* Host Controls */}
-          {isHost && correctOption !== null && (
+          {/* Waiting for results */}
+          {hasAnswered && correctOption === null && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center p-4 bg-muted border-4 border-black"
+            >
+              <p className="font-heading text-lg uppercase">Answer Locked In!</p>
+              <p className="text-sm text-gray-600 mt-1">
+                Waiting for all players to answer...
+              </p>
+            </motion.div>
+          )}
+
+          {/* Time's up message */}
+          {!hasAnswered && timeRemaining === 0 && correctOption === null && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center p-4 bg-red-100 border-4 border-red-500"
+            >
+              <p className="font-heading text-lg uppercase text-red-700">Time&apos;s Up!</p>
+              <p className="text-sm text-red-600 mt-1">
+                You didn&apos;t answer in time
+              </p>
+            </motion.div>
+          )}
+
+          {/* Host Controls - show when time is up OR after round_end */}
+          {isHost && (hasAnswered || timeRemaining === 0 || correctOption !== null) && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -333,7 +377,7 @@ export default function ArenaPage({
           {/* Scoreboard */}
           <LiveScoreboard
             leaderboard={leaderboard}
-            currentUserId={user?.id}
+            currentUserId={userId}
             previousRanks={previousRanks}
           />
         </div>

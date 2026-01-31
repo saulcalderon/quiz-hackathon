@@ -32,4 +32,9 @@ export class QuizController {
   async getLeaderboard(@Param('code') code: string) {
     return this.quizService.getLeaderboard(code.toUpperCase());
   }
+
+  @Get('my-status')
+  async getMyStatus(@Param('code') code: string, @CurrentUser() user: User) {
+    return this.quizService.getParticipationStatus(code.toUpperCase(), user.id);
+  }
 }

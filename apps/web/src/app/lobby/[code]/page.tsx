@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Copy, Check, ArrowLeft } from "lucide-react";
 import { useState } from "react";
-import { useAuth } from "@/contexts/auth-context";
+import { useWallet } from "@/contexts/wallet-context";
 import { useLobby } from "@/hooks/use-lobby";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -21,8 +21,8 @@ export default function LobbyPage({
 }) {
   const { code } = use(params);
   const router = useRouter();
-  const { user } = useAuth();
-  const { lobby, isLoading, error } = useLobby(code.toUpperCase());
+  const { userId } = useWallet();
+  const { lobby, isLoading, error, leaveLobby } = useLobby(code.toUpperCase());
   const [copied, setCopied] = useState(false);
 
   const handleCopyCode = async () => {
@@ -68,7 +68,7 @@ export default function LobbyPage({
     );
   }
 
-  const isHost = lobby.hostId === user?.id;
+  const isHost = lobby.hostId === userId;
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -81,7 +81,7 @@ export default function LobbyPage({
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => router.push("/dashboard")}
+          onClick={leaveLobby}
           className="mb-4"
         >
           <ArrowLeft className="w-4 h-4 mr-1" />
@@ -140,7 +140,7 @@ export default function LobbyPage({
             transition={{ delay: 0.2 }}
           >
             <h2 className="font-heading text-xl uppercase mb-4">Players</h2>
-            <PlayerGrid players={lobby.players} hostId={lobby.hostId} />
+            <PlayerGrid players={lobby.players} hostId={lobby.hostId} currentUserId={userId} />
           </motion.div>
         </div>
 

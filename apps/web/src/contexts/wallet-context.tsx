@@ -13,6 +13,7 @@ import { api } from "@/lib/api";
 import { User } from "@/types";
 
 interface WalletContextType {
+  userId: string | null;  // Internal database user ID
   balance: number;
   xp: number;
   isLoading: boolean;
@@ -29,6 +30,7 @@ interface WalletProviderProps {
 
 export function WalletProvider({ children }: WalletProviderProps) {
   const { user, session } = useAuth();
+  const [userId, setUserId] = useState<string | null>(null);
   const [balance, setBalance] = useState(0);
   const [xp, setXp] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,6 +38,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
 
   const fetchBalance = useCallback(async () => {
     if (!user || !session) {
+      setUserId(null);
       setBalance(0);
       setXp(0);
       setIsLoading(false);
@@ -45,9 +48,10 @@ export function WalletProvider({ children }: WalletProviderProps) {
     try {
       setIsLoading(true);
       setError(null);
-      const data = await api.get<User>("/users/me");
-      setBalance(data.balance);
-      setXp(data.xp);
+      const response = await api.get<{ data: User }>("/users/me");
+      setUserId(response.data.id);
+      setBalance(response.data.balance);
+      setXp(response.data.xp);
     } catch (err) {
       console.error("Failed to fetch balance:", err);
       setError("Failed to load balance");
@@ -62,9 +66,9 @@ export function WalletProvider({ children }: WalletProviderProps) {
 
       try {
         setError(null);
-        const data = await api.post<User>("/users/me/topup", { amount });
-        setBalance(data.balance);
-        setXp(data.xp);
+        const response = await api.post<{ data: User }>("/users/me/topup", { amount });
+        setBalance(response.data.balance);
+        setXp(response.data.xp);
       } catch (err) {
         console.error("Failed to top up:", err);
         setError("Failed to top up");
@@ -81,6 +85,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
   return (
     <WalletContext.Provider
       value={{
+        userId,
         balance,
         xp,
         isLoading,

@@ -34,13 +34,13 @@ export default function ResultsPage({
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const [lobbyData, leaderboardData] = await Promise.all([
-          api.get<Lobby>(`/lobbies/${code}`),
-          api.get<LeaderboardEntry[]>(`/lobbies/${code}/leaderboard`),
+        const [lobbyRes, leaderboardRes] = await Promise.all([
+          api.get<{ data: Lobby }>(`/lobbies/${code}`),
+          api.get<{ data: LeaderboardEntry[] }>(`/lobbies/${code}/leaderboard`),
         ]);
 
-        setLobby(lobbyData);
-        setLeaderboard(leaderboardData);
+        setLobby(lobbyRes.data);
+        setLeaderboard(leaderboardRes.data);
 
         // Refresh wallet balance
         await refetchWallet();

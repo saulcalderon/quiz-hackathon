@@ -31,6 +31,7 @@ export class LobbyController {
       totalPot: lobby.totalPot,
       currentQuestion: lobby.currentQuestion,
       hasQuestions: !!lobby.questions,
+      hostId: lobby.hostId,
       players: lobby.participations.map((p) => ({
         userId: p.userId,
         score: p.score,
@@ -51,6 +52,12 @@ export class LobbyController {
       userId: participation.userId,
       joinedAt: participation.joinedAt,
     };
+  }
+
+  @Post(':code/leave')
+  async leaveLobby(@Param('code') code: string, @CurrentUser() user: User) {
+    await this.lobbyService.leaveLobby(code.toUpperCase(), user.id);
+    return { success: true, message: 'Left lobby' };
   }
 
   @Post(':code/generate')

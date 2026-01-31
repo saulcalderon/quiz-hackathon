@@ -209,4 +209,43 @@ export class QuizService {
       rank: index + 1,
     }));
   }
+
+  async getParticipationStatus(
+    code: string,
+    userId: string,
+  ): Promise<{
+    hasAnsweredCurrent: boolean;
+    answeredQuestions: number[];
+    doubledQuestion: number | null;
+    score: number;
+  }> {
+    const lobby = await this.prisma.lobby.findUnique({
+      where: { code },
+      include: {
+        participations: {
+          where: { userId },
+        },
+      },
+    });
+
+    if (!lobby) {
+      throw new NotFoundException('Lobby not found');
+    }
+
+    const participation = lobby.participations[0];
+    if (!participation) {
+      throw new BadRequestException('You are not in this lobby');
+    }
+
+    const answers = (participation.answers as AnswerRecord[]) || [];
+    const answeredQuestions = answers.map((a) => a.questionIndex);
+    const hasAnsweredCurrent = answeredQuestions.includes(lobby.currentQuestion);
+
+    return {
+      hasAnsweredCurrent,
+      answeredQuestions,
+      doubledQuestion: participation.doubledQ,
+      score: participation.score,
+    };
+  }
 }
