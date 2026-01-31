@@ -1,0 +1,50 @@
+{
+  "palette_name": "SkillStake Neo Brutalist Theme",
+  "colors": {
+    "background": {
+      "main": {
+        "hex": "#FFFFFF",
+        "description": "White main background"
+      },
+      "card": {
+        "hex": "#FFFFFF",
+        "description": "White card background"
+      }
+    },
+    "primary": {
+      "black": {
+        "hex": "#000000",
+        "description": "Black for text and borders"
+      },
+      "yellow": {
+        "hex": "#F4F916",
+        "description": "Neon yellow accent (primary CTA)"
+      }
+    },
+    "secondary": {
+      "purple": {
+        "hex": "#BC13FE",
+        "description": "Vibrant purple accent"
+      },
+      "green": {
+        "hex": "#00E552",
+        "description": "Bright green accent"
+      }
+    },
+    "text": {
+      "primary": {
+        "hex": "#000000",
+        "description": "Black primary text"
+      },
+      "secondary": {
+        "hex": "#555555",
+        "description": "Gray secondary text"
+      }
+    },
+    "neo_brutalist": {
+      "border_width": "3px",
+      "shadow_offset": "6px",
+      "description": "Hard shadows with offset, no blur"
+    }
+  }
+}

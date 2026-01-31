@@ -1,0 +1,282 @@
+@import "tailwindcss";
+
+/* ============================
+   NEO BRUTALIST DESIGN SYSTEM
+   SkillStake Landing Page
+   ============================ */
+
+:root {
+  /* Colors */
+  --bg-color: #ffffff;
+  --black: #000000;
+  --yellow: #F4F916;
+  --purple: #BC13FE;
+  --green: #00E552;
+  --white: #ffffff;
+  --gray: #555555;
+  
+  /* Neo Brutalist Config */
+  --border-width: 3px;
+  --shadow-offset: 6px;
+  
+  /* Typography */
+  --font-main: var(--font-inter), 'Inter', sans-serif;
+}
+
+/* ============================
+   RESET & BASE
+   ============================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--white);
+  color: var(--black);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-main);
+  font-weight: 900;
+  color: var(--black);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ============================
+   NEO BRUTALIST UTILITIES
+   ============================ */
+
+/* The magic class for neo brutalist effect */
+.neo-box {
+  background: var(--white);
+  border: var(--border-width) solid var(--black);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--black);
+  transition: all 0.2s ease;
+}
+
+/* Click effect (sink in) */
+.neo-box.clickable:active,
+.neo-box:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--black);
+}
+
+/* Hover effect */
+.neo-box:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px var(--black);
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ============================
+   BUTTON STYLES
+   ============================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: var(--border-width) solid var(--black);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--black);
+  transition: all 0.2s ease;
+}
+
+.btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px var(--black);
+}
+
+.btn-primary {
+  background-color: var(--yellow);
+  color: var(--black);
+}
+
+.btn-secondary {
+  background-color: var(--white);
+  color: var(--black);
+}
+
+.btn-purple {
+  background-color: var(--purple);
+  color: var(--white);
+}
+
+.btn-green {
+  background-color: var(--green);
+  color: var(--black);
+}
+
+/* ============================
+   CARD STYLES
+   ============================ */
+.card {
+  background: var(--white);
+  border: var(--border-width) solid var(--black);
+  box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--black);
+  padding: 30px;
+}
+
+.card-yellow {
+  background-color: var(--yellow);
+}
+
+.card-purple {
+  background-color: var(--purple);
+  color: var(--white);
+}
+
+/* ============================
+   INPUT STYLES
+   ============================ */
+.neo-input {
+  width: 100%;
+  padding: 15px;
+  font-size: 1rem;
+  font-family: var(--font-main);
+  border: var(--border-width) solid var(--black);
+  text-transform: uppercase;
+  font-weight: 700;
+  outline: none;
+  background: var(--white);
+}
+
+.neo-input:focus {
+  box-shadow: 4px 4px 0px var(--black);
+}
+
+/* ============================
+   TICKER STYLES
+   ============================ */
+.ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--yellow);
+  border-top: var(--border-width) solid var(--black);
+  border-bottom: var(--border-width) solid var(--black);
+  padding: 12px 0;
+}
+
+.ticker {
+  display: flex;
+  white-space: nowrap;
+  animation: scroll 30s linear infinite;
+}
+
+.ticker-item {
+  display: inline-block;
+  padding: 0 2rem;
+  font-weight: 700;
+  color: var(--black);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ============================
+   BADGES & TAGS
+   ============================ */
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: var(--border-width) solid var(--black);
+}
+
+.badge-purple {
+  background-color: var(--purple);
+  color: var(--white);
+}
+
+.badge-yellow {
+  background-color: var(--yellow);
+  color: var(--black);
+}
+
+/* Step numbers */
+.step-num {
+  width: 30px;
+  height: 30px;
+  background: var(--purple);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ============================
+   RESPONSIVE
+   ============================ */
+@media (max-width: 768px) {
+  .ticker {
+    animation-duration: 20s;
+  }
+}
+
+@media (min-width: 768px) {
+  .ticker {
+    animation-duration: 40s;
+  }
+}
+
+/* Study Cycle Grid - Responsive */
+@media (max-width: 768px) {
+  .study-cycle-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================
+   SELECTION & SCROLLBAR
+   ============================ */
+::selection {
+  background: var(--yellow);
+  color: var(--black);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--white);
+  border-left: var(--border-width) solid var(--black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--black);
+}
