@@ -66,33 +66,32 @@ export default function ArenaPage({
   // Fetch initial data
   const fetchGameState = useCallback(async () => {
     try {
-      const [lobbyRes, questionRes, leaderboardRes, statusRes] = await Promise.all([
-        api.get<{ data: Lobby }>(`/lobbies/${code}`),
-        api.get<{ data: QuestionForClient | { finished: boolean } }>(
+      const [lobbyData, questionData, leaderboardData, statusData] = await Promise.all([
+        api.get<Lobby>(`/lobbies/${code}`),
+        api.get<QuestionForClient | { finished: boolean }>(
           `/lobbies/${code}/question`
         ),
-        api.get<{ data: LeaderboardEntry[] }>(`/lobbies/${code}/leaderboard`),
-        api.get<{ data: { hasAnsweredCurrent: boolean; doubledQuestion: number | null } }>(
+        api.get<LeaderboardEntry[]>(`/lobbies/${code}/leaderboard`),
+        api.get<{ hasAnsweredCurrent: boolean; doubledQuestion: number | null }>(
           `/lobbies/${code}/my-status`
         ),
       ]);
 
-      setLobby(lobbyRes.data);
-      setLeaderboard(leaderboardRes.data);
+      setLobby(lobbyData);
+      setLeaderboard(leaderboardData);
 
       // Redirect if game is finished
-      if (lobbyRes.data.status === "FINISHED") {
+      if (lobbyData.status === "FINISHED") {
         router.push(`/results/${code}`);
         return;
       }
 
       // Redirect if game hasn't started yet
-      if (lobbyRes.data.status === "WAITING") {
+      if (lobbyData.status === "WAITING") {
         router.push(`/lobby/${code}`);
         return;
       }
 
-      const questionData = questionRes.data;
       if ("finished" in questionData && questionData.finished) {
         router.push(`/results/${code}`);
         return;
@@ -102,7 +101,7 @@ export default function ArenaPage({
         setCurrentQuestion(questionData);
         
         // Check if user already answered this question
-        const { hasAnsweredCurrent, doubledQuestion } = statusRes.data;
+        const { hasAnsweredCurrent, doubledQuestion } = statusData;
         if (hasAnsweredCurrent) {
           setHasAnswered(true);
           setTimeRemaining(0);
@@ -189,6 +188,10 @@ export default function ArenaPage({
       })
       .on("broadcast", { event: "game_over" }, () => {
         setIsGameFinished(true);
+        // Redirect all players to results after a short delay to show final answer
+        setTimeout(() => {
+          router.push(`/results/${code}`);
+        }, 2000);
       })
       .subscribe();
 

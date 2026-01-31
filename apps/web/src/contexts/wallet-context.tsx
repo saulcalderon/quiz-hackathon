@@ -52,6 +52,7 @@ export function WalletProvider({ children }: WalletProviderProps) {
       setIsLoading(true);
       setError(null);
       const data = await api.get<User>("/users/me");
+      setUserId(data.id);
       setBalance(data.balance);
       setXp(data.xp);
       // Increment payment count to trigger transaction refresh in profile page

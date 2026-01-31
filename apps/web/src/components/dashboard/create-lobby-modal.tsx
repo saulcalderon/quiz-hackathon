@@ -43,12 +43,12 @@ export function CreateLobbyModal({ isOpen, onClose }: CreateLobbyModalProps) {
     setIsLoading(true);
 
     try {
-      const response = await api.post<{ data: { code: string } }>("/lobbies", {
+      const response = await api.post<{ code: string }>("/lobbies", {
         entryFee: entryFeeNum,
         topic,
         notes: notes || undefined,
       });
-      const lobbyCode = response.data.code;
+      const lobbyCode = response.code;
 
       // Join the lobby as host
       await api.post(`/lobbies/${lobbyCode}/join`);

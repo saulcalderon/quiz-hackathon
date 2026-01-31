@@ -14,8 +14,8 @@ export function useLobby(code: string) {
 
   const fetchLobby = useCallback(async () => {
     try {
-      const response = await api.get<{ data: Lobby }>(`/lobbies/${code}`);
-      setLobby(response.data);
+      const lobby = await api.get<Lobby>(`/lobbies/${code}`);
+      setLobby(lobby);
       setError(null);
     } catch (err) {
       setError("Failed to load lobby");

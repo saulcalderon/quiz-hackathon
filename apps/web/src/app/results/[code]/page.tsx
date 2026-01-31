@@ -32,20 +32,20 @@ export default function ResultsPage({
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const [lobbyRes, leaderboardRes] = await Promise.all([
-          api.get<{ data: Lobby }>(`/lobbies/${code}`),
-          api.get<{ data: LeaderboardEntry[] }>(`/lobbies/${code}/leaderboard`),
+        const [lobbyData, leaderboardData] = await Promise.all([
+          api.get<Lobby>(`/lobbies/${code}`),
+          api.get<LeaderboardEntry[]>(`/lobbies/${code}/leaderboard`),
         ]);
 
-        setLobby(lobbyRes.data);
-        setLeaderboard(leaderboardRes.data);
+        setLobby(lobbyData);
+        setLeaderboard(leaderboardData);
 
         // Redirect if game not finished
-        if (lobbyRes.data.status === "WAITING") {
+        if (lobbyData.status === "WAITING") {
           router.push(`/lobby/${code}`);
           return;
         }
-        if (lobbyRes.data.status === "ACTIVE") {
+        if (lobbyData.status === "ACTIVE") {
           router.push(`/arena/${code}`);
           return;
         }

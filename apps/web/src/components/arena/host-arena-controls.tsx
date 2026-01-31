@@ -24,10 +24,12 @@ export function HostArenaControls({
   const handleAdvance = async () => {
     setIsAdvancing(true);
     try {
-      const response = await api.post<{ data: { finished?: boolean } }>(
+      const result = await api.post<{ finished?: boolean }>(
         `/lobbies/${code}/next`
       );
-      if (response.data.finished) {
+      if (result.finished) {
+        // No more questions - finish the game and distribute winnings
+        await api.post(`/lobbies/${code}/finish`);
         onFinish();
       } else {
         onAdvance();
