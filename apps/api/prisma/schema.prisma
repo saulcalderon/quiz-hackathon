@@ -8,11 +8,74 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id             String          @id @default(uuid())
+  supabaseId     String          @unique @map("supabase_id")
+  balance        Float           @default(0.0)
+  xp             Int             @default(0)
+  transactions   Transaction[]
+  participations Participation[]
+  hostedLobbies  Lobby[]         @relation("HostedLobbies")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+model Lobby {
+  id             String          @id @default(uuid())
+  code           String          @unique
+  status         LobbyStatus     @default(WAITING)
+  entryFee       Float           @map("entry_fee")
+  totalPot       Float           @default(0) @map("total_pot")
+  questions      Json?
+  currentQuestion Int            @default(0) @map("current_question")
+  hostId         String          @map("host_id")
+  host           User            @relation("HostedLobbies", fields: [hostId], references: [id])
+  participations Participation[]
+  transactions   Transaction[]
+  createdAt      DateTime        @default(now()) @map("created_at")
+
+  @@map("lobbies")
+}
+
+enum LobbyStatus {
+  WAITING
+  ACTIVE
+  FINISHED
+}
+
+model Participation {
+  id        String   @id @default(uuid())
+  score     Int      @default(0)
+  speedXp   Int      @default(0) @map("speed_xp")
+  doubledQ  Int?     @map("doubled_question")
+  answers   Json?    @default("[]")
+  userId    String   @map("user_id")
+  lobbyId   String   @map("lobby_id")
+  user      User     @relation(fields: [userId], references: [id])
+  lobby     Lobby    @relation(fields: [lobbyId], references: [id])
+  joinedAt  DateTime @default(now()) @map("joined_at")
+
+  @@unique([userId, lobbyId])
+  @@map("participations")
+}
+
+model Transaction {
+  id        String          @id @default(uuid())
+  amount    Float
+  type      TransactionType
+  userId    String          @map("user_id")
+  lobbyId   String?         @map("lobby_id")
+  user      User            @relation(fields: [userId], references: [id])
+  lobby     Lobby?          @relation(fields: [lobbyId], references: [id])
+  createdAt DateTime        @default(now()) @map("created_at")
+
+  @@map("transactions")
+}
+
+enum TransactionType {
+  TOPUP
+  ENTRY
+  WIN
+  HOUSE_FEE
 }
