@@ -11,17 +11,7 @@ export class LobbyController {
 
   @Post()
   async createLobby(@CurrentUser() user: User, @Body() dto: CreateLobbyDto) {
-    // #region agent log
-    const fs = require('fs');
-    fs.appendFileSync('/Users/saulcalderon/Desktop/Personal/quiz-hackathon/.cursor/debug.log', JSON.stringify({location:'lobby.controller.ts:createLobby',message:'Create lobby endpoint reached',data:{userId:user?.id,dto},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'D,E'}) + '\n');
-    // #endregion
-
     const lobby = await this.lobbyService.createLobby(user.id, dto.entryFee);
-
-    // #region agent log
-    fs.appendFileSync('/Users/saulcalderon/Desktop/Personal/quiz-hackathon/.cursor/debug.log', JSON.stringify({location:'lobby.controller.ts:createLobby',message:'Lobby created successfully',data:{lobbyId:lobby.id,code:lobby.code},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'E'}) + '\n');
-    // #endregion
-
     return {
       id: lobby.id,
       code: lobby.code,
