@@ -28,7 +28,7 @@ function getJwtConfig(): StrategyOptionsWithoutRequest {
         jwksRequestsPerMinute: 5,
         jwksUri: `${supabaseUrl}/auth/v1/.well-known/jwks.json`,
       }),
-      algorithms: ['RS256'],
+      algorithms: ['ES256'],
     };
   }
 

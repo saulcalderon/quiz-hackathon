@@ -1,6 +1,6 @@
 import { createClient } from "./supabase/client";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_URL = `${API_BASE_URL}/api`;
 
 type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";

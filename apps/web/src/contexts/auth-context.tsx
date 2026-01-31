@@ -8,6 +8,7 @@ import {
   useCallback,
   ReactNode,
 } from "react";
+import { useRouter } from "next/navigation";
 import { User, Session } from "@supabase/supabase-js";
 import { createClient } from "@/lib/supabase/client";
 import { api } from "@/lib/api";
@@ -33,6 +34,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const router = useRouter();
   const supabase = createClient();
 
   useEffect(() => {
@@ -127,7 +129,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signOut = useCallback(async () => {
     await supabase.auth.signOut();
-  }, [supabase.auth]);
+    router.push("/login");
+  }, [supabase.auth, router]);
 
   return (
     <AuthContext.Provider
