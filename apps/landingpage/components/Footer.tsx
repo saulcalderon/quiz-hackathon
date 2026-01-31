@@ -2,18 +2,9 @@
 
 import { useLanguage } from "@/context/LanguageContext";
 import Link from "next/link";
-import appConfig from "@/appConfig.json";
 
 export default function Footer() {
   const { t } = useLanguage();
-
-  const handleRules = () => {
-    if (appConfig.external.openInNewTab) {
-      window.open(appConfig.links.rules, "_blank");
-    } else {
-      window.location.href = appConfig.links.rules;
-    }
-  };
 
   return (
     <footer
@@ -74,20 +65,17 @@ export default function Footer() {
         >
           {t("footer.terms")}
         </Link>
-        <button
-          onClick={handleRules}
+        <Link
+          href="/rules"
           style={{
-            background: "none",
-            border: "none",
             color: "var(--black)",
             fontSize: "0.85rem",
             fontWeight: 700,
-            cursor: "pointer",
             textDecoration: "none"
           }}
         >
           {t("footer.rules")}
-        </button>
+        </Link>
       </div>
 
       {/* Disclaimer */}
